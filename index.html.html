@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lumora Cinematic Studios — Fictional Demo</title>
+<meta name="description" content="Lumora Cinematic Studios — Capturing Moments, Creating Legacies. A fictional demo brand created for a premium photography portfolio website design.">
+<meta name="theme-color" content="#080808">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' fill='%23080808'/%3E%3Ccircle cx='60' cy='60' r='48' fill='none' stroke='%23C6A45B' stroke-width='4'/%3E%3Cpath d='M46 36v46h30' fill='none' stroke='%23C6A45B' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@300;400;500;600&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script>
+/* Decide motion + intro state before first paint (prevents flashes). */
+(function () {
+  var d = document.documentElement;
+  d.classList.replace('no-js', 'js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false;
+  try { seen = sessionStorage.getItem('lumora-intro') === '1' && !/[?&]intro/.test(location.search); } catch (e) {}
+  if (!reduce) d.classList.add('anim');
+  if (!reduce && !seen) d.classList.add('is-intro');
+})();
+</script>
+
+<style>
+/* ==========================================================================
+   LUMORA CINEMATIC STUDIOS — FICTIONAL DEMO
+   1. Design tokens
+   2. Reset & base
+   3. Typography & utilities
+   4. Buttons
+   5. Intro
+   6. Navigation & mobile menu
+   7. Hero
+   8. Stub sections & footer
+   9. Responsive & accessibility
+   ========================================================================== */
+
+/* 1. DESIGN TOKENS ------------------------------------------------------- */
+:root {
+  /* Brand colour */
+  --obsidian: #080808;
+  --charcoal: #171717;
+  --gold: #C6A45B;
+  --ivory: #F3EFE7;
+
+  /* Tints */
+  --gold-soft: rgba(198, 164, 91, .38);
+  --gold-faint: rgba(198, 164, 91, .16);
+  --ivory-80: rgba(243, 239, 231, .82);
+  --ivory-60: rgba(243, 239, 231, .62);
+  --ivory-30: rgba(243, 239, 231, .3);
+  --ivory-12: rgba(243, 239, 231, .12);
+
+  /* Type families */
+  --ff-display: 'Cormorant Garamond', 'Times New Roman', serif;
+  --ff-label: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ff-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid type scale */
+  --fs-hero: clamp(2.5rem, 1.2rem + 5.8vw, 8rem);
+  --fs-h2: clamp(2.2rem, 1.3rem + 3.6vw, 5rem);
+  --fs-lead: clamp(1rem, .94rem + .3vw, 1.18rem);
+  --fs-label: .7rem;
+
+  /* Layout */
+  --gutter: clamp(1.25rem, 4.2vw, 4.5rem);
+  --maxw: 1480px;
+  --nav-h: clamp(68px, 9vh, 90px);
+
+  /* Spacing scale */
+  --s-1: .5rem; --s-2: 1rem; --s-3: 1.5rem; --s-4: 2.5rem; --s-5: 4rem; --s-6: clamp(5rem, 10vw, 9rem);
+
+  /* Motion */
+  --ease-lux: cubic-bezier(.22, .8, .18, 1);
+  --ease-io: cubic-bezier(.76, 0, .24, 1);
+}
+
+/* 2. RESET & BASE -------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+html.is-intro, html.is-intro body,
+html.menu-open, html.menu-open body { overflow: hidden; }
+
+body {
+  background: var(--obsidian);
+  color: var(--ivory);
+  font-family: var(--ff-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+ul { list-style: none; }
+::selection { background: var(--gold); color: var(--obsidian); }
+:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+svg { flex: none; }
+
+/* thin, quiet scrollbar for Windows laptops */
+@supports (scrollbar-width: thin) { html { scrollbar-width: thin; scrollbar-color: var(--gold-soft) var(--obsidian); } }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--obsidian); }
+::-webkit-scrollbar-thumb { background: #2a2620; border: 2px solid var(--obsidian); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-soft); }
+
+/* 3. TYPOGRAPHY & UTILITIES ---------------------------------------------- */
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+.skip-link {
+  position: fixed; left: 1rem; top: -4rem; z-index: 2000;
+  padding: .8rem 1.2rem; background: var(--gold); color: var(--obsidian);
+  font: 600 .72rem var(--ff-label); letter-spacing: .18em; text-transform: uppercase;
+  transition: top .3s var(--ease-lux);
+}
+.skip-link:focus { top: 1rem; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 1rem;
+  font: 500 var(--fs-label)/1 var(--ff-label);
+  letter-spacing: .34em; text-transform: uppercase; color: var(--gold);
+}
+.eyebrow::before { content: ""; width: clamp(28px, 4vw, 56px); height: 1px; background: var(--gold); opacity: .8; }
+.eyebrow__num { font-variant-numeric: tabular-nums; color: var(--ivory-60); }
+
+.display { font-family: var(--ff-display); font-weight: 400; line-height: .98; letter-spacing: -.012em; }
+.display em, .gold-italic { font-style: italic; font-weight: 300; color: var(--gold); }
+.lead { font-size: var(--fs-lead); font-weight: 300; color: var(--ivory-80); line-height: 1.8; }
+
+/* 4. BUTTONS ------------------------------------------------------------- */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .9rem;
+  height: 3.5rem; padding: 0 2rem;
+  font: 500 .72rem/1 var(--ff-label); letter-spacing: .22em; text-transform: uppercase; white-space: nowrap;
+  color: var(--obsidian); background: var(--gold); border: 1px solid var(--gold);
+  overflow: hidden; isolation: isolate;
+  transition: color .5s var(--ease-lux), border-color .5s var(--ease-lux);
+}
+.btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--ivory); transform: translateY(101%);
+  transition: transform .6s var(--ease-lux);
+}
+.btn svg, .btn i svg { width: 1.15em; height: 1.15em; stroke-width: 1.5; }
+.btn--ghost { background: transparent; color: var(--ivory); border-color: var(--ivory-30); }
+.btn--ghost::before { background: var(--gold); }
+.btn--sm { height: 2.8rem; padding: 0 1.4rem; font-size: .66rem; }
+@media (hover: hover) {
+  .btn:hover::before { transform: none; }
+  .btn--ghost:hover { color: var(--obsidian); border-color: var(--gold); }
+}
+
+/* 5. INTRO --------------------------------------------------------------- */
+.intro { position: fixed; inset: 0; z-index: 1000; display: none; color: var(--ivory); }
+.is-intro .intro { display: block; }
+
+.intro__bar { position: absolute; left: 0; right: 0; height: 50.3%; background: var(--obsidian); will-change: transform; }
+.intro__bar--top { top: 0; }
+.intro__bar--bottom { bottom: 0; }
+.intro__bar::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-soft), transparent); }
+.intro__bar--top::after { bottom: 0; }
+.intro__bar--bottom::after { top: 0; }
+
+.intro__center {
+  position: absolute; inset: 0; display: grid; place-content: center; justify-items: center;
+  gap: clamp(1rem, 2.4vh, 1.6rem); text-align: center; padding: var(--gutter); opacity: 0;
+}
+.intro__center::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(45% 38% at 50% 50%, rgba(198, 164, 91, .12), transparent 70%);
+}
+.intro__mark { width: clamp(64px, 9vw, 92px); height: auto; color: var(--gold); overflow: visible; }
+.intro__mark .draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.intro__brand {
+  font: 500 clamp(2.3rem, 1rem + 6.4vw, 6rem)/1 var(--ff-display);
+  letter-spacing: .34em; margin-right: -.34em; padding: .12em 0; overflow: hidden;
+}
+.intro__brand .ch { display: inline-block; }
+.intro__sub { font: 500 .66rem/1 var(--ff-label); letter-spacing: .52em; margin-right: -.52em; text-transform: uppercase; color: var(--gold); }
+.intro__tag { font: italic 300 clamp(1.05rem, .9rem + .7vw, 1.45rem)/1.3 var(--ff-display); color: var(--ivory-80); }
+
+.intro__foot {
+  position: absolute; left: 0; right: 0; bottom: 0; opacity: 0;
+  display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.5rem;
+  padding: 0 var(--gutter) max(1.6rem, env(safe-area-inset-bottom));
+}
+.intro__count { font: 500 .72rem/1 var(--ff-label); letter-spacing: .24em; color: var(--ivory-60); font-variant-numeric: tabular-nums; min-width: 3.2ch; }
+.intro__demo { text-align: center; font: 500 .6rem/1.4 var(--ff-label); letter-spacing: .3em; text-transform: uppercase; color: var(--ivory-60); }
+.intro__skip {
+  display: inline-flex; align-items: center; gap: .7rem; padding: .7rem 0;
+  font: 500 .68rem/1 var(--ff-label); letter-spacing: .26em; text-transform: uppercase; color: var(--ivory);
+  border-bottom: 1px solid var(--gold-soft); transition: border-color .4s, color .4s;
+}
+.intro__skip svg { width: 1.1em; height: 1.1em; stroke-width: 1.5; color: var(--gold); }
+.intro__skip:hover { border-color: var(--gold); color: var(--gold); }
+.intro__line { position: absolute; left: 0; bottom: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+
+/* 6. NAVIGATION & MOBILE MENU -------------------------------------------- */
+.nav { position: fixed; inset: 0 0 auto 0; z-index: 100; transition: transform .7s var(--ease-lux), background-color .5s, backdrop-filter .5s; }
+.nav::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-faint), transparent); opacity: 0; transition: opacity .5s; }
+.nav.is-solid { background: rgba(8, 8, 8, .82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.nav.is-solid::after { opacity: 1; }
+.nav.is-hidden { transform: translateY(-101%); }
+.menu-open .nav { transform: none; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.menu-open .nav::after { opacity: 0; }
+
+.nav__inner {
+  max-width: 1680px; margin-inline: auto; height: var(--nav-h); padding-inline: var(--gutter);
+  display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+}
+.logo { display: inline-flex; align-items: center; gap: .9rem; color: var(--ivory); }
+.logo__mark { width: 34px; height: 34px; color: var(--gold); }
+.logo__txt { display: grid; gap: .32rem; line-height: 1; }
+.logo__name { font: 600 1.25rem/1 var(--ff-display); letter-spacing: .34em; }
+.logo__sub { font: 500 .5rem/1 var(--ff-label); letter-spacing: .42em; text-transform: uppercase; color: var(--gold); }
+
+.nav__links { display: none; align-items: center; gap: clamp(1.6rem, 3vw, 3.2rem); margin-left: auto; }
+.nav__links a {
+  position: relative; display: inline-flex; align-items: baseline; gap: .55rem; padding: .6rem 0;
+  font: 500 .7rem/1 var(--ff-label); letter-spacing: .22em; text-transform: uppercase; color: var(--ivory-80);
+  transition: color .4s;
+}
+.nav__links .n { font-size: .55rem; color: var(--gold); letter-spacing: .1em; opacity: .85; }
+.nav__links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: .1rem; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right; transition: transform .6s var(--ease-lux); }
+.nav__links a.is-current { color: var(--ivory); }
+.nav__links a.is-current::after { transform: scaleX(1); transform-origin: left; }
+@media (hover: hover) {
+  .nav__links a:hover { color: var(--ivory); }
+  .nav__links a:hover::after { transform: scaleX(1); transform-origin: left; }
+}
+.nav__cta { display: none; }
+
+.burger { position: relative; z-index: 3; width: 48px; height: 48px; display: grid; place-content: center; gap: 7px; margin-right: -10px; }
+.burger span { display: block; width: 28px; height: 1px; background: var(--ivory); transition: transform .6s var(--ease-lux), width .4s var(--ease-lux), background-color .4s; }
+.burger span:last-child { width: 18px; margin-left: auto; }
+.menu-open .burger span:first-child { transform: translateY(4px) rotate(45deg); background: var(--gold); }
+.menu-open .burger span:last-child { width: 28px; transform: translateY(-4px) rotate(-45deg); background: var(--gold); }
+
+.menu {
+  position: fixed; inset: 0; z-index: 90; background: var(--obsidian);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: calc(var(--nav-h) + 1.5rem) var(--gutter) max(1.8rem, env(safe-area-inset-bottom));
+  clip-path: inset(0 0 100% 0); visibility: hidden;
+  transition: clip-path .9s var(--ease-io), visibility 0s .9s;
+  overflow-y: auto;
+}
+.menu::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(80% 50% at 85% 10%, rgba(198, 164, 91, .12), transparent 70%); }
+.menu-open .menu { clip-path: inset(0); visibility: visible; transition: clip-path .9s var(--ease-io), visibility 0s 0s; }
+.menu__list { position: relative; display: grid; gap: clamp(.2rem, 1.4vh, .8rem); margin-block: auto; }
+.menu__row { overflow: hidden; }
+.menu__link {
+  display: flex; align-items: baseline; gap: 1.2rem; padding: .35rem 0;
+  font: 300 clamp(2.6rem, 11vw, 5rem)/1.05 var(--ff-display); letter-spacing: -.01em;
+  transform: translateY(110%); transition: transform .9s var(--ease-lux), color .4s;
+  transition-delay: 0s;
+}
+.menu__link .n { font: 500 .62rem/1 var(--ff-label); letter-spacing: .2em; color: var(--gold); }
+.menu-open .menu__link { transform: none; transition-delay: calc(.25s + var(--i) * .08s); }
+.menu__link:active, .menu__link:focus-visible { color: var(--gold); }
+.menu__foot { position: relative; display: grid; gap: 1.1rem; padding-top: 1.6rem; border-top: 1px solid var(--ivory-12); margin-top: 2rem; opacity: 0; transition: opacity .8s .6s; }
+.menu-open .menu__foot { opacity: 1; }
+.menu__tag { font: italic 300 1.25rem/1.3 var(--ff-display); color: var(--ivory-80); }
+.menu__note { font: 500 .6rem/1.7 var(--ff-label); letter-spacing: .26em; text-transform: uppercase; color: var(--ivory-60); }
+
+/* 7. HERO ---------------------------------------------------------------- */
+.hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  min-height: 100vh; min-height: 100svh;
+  display: grid; grid-template-rows: 1fr auto;
+  background: var(--obsidian);
+}
+.hero__media { position: absolute; inset: -10% 0; z-index: -3; will-change: transform; }
+.slide { position: absolute; inset: 0; margin: 0; opacity: 0; will-change: transform, opacity; }
+.slide.is-active { opacity: 1; z-index: 1; }
+.slide__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s var(--ease-lux); }
+.slide.has-image .slide__img { opacity: 1; }
+
+/* Placeholder plates — pure CSS "photographs". Replaced automatically when an image loads. */
+.ph { position: absolute; inset: 0; }
+.ph--1 {
+  background:
+    radial-gradient(58% 52% at 74% 36%, rgba(198, 164, 91, .5), transparent 62%),
+    radial-gradient(30% 32% at 18% 74%, rgba(198, 164, 91, .2), transparent 70%),
+    radial-gradient(16% 16% at 88% 78%, rgba(243, 239, 231, .16), transparent 70%),
+    linear-gradient(160deg, #1d1810 0%, #0d0b09 58%, #080808 100%);
+}
+.ph--1::after {
+  content: ""; position: absolute; inset: 0; opacity: .75;
+  background:
+    radial-gradient(circle at 62% 24%, rgba(243, 239, 231, .22) 0 1.1%, transparent 1.6%),
+    radial-gradient(circle at 80% 52%, rgba(198, 164, 91, .3) 0 2%, transparent 2.6%),
+    radial-gradient(circle at 70% 68%, rgba(243, 239, 231, .12) 0 1.6%, transparent 2.2%),
+    radial-gradient(circle at 90% 30%, rgba(198, 164, 91, .22) 0 1.3%, transparent 1.9%),
+    radial-gradient(circle at 54% 56%, rgba(198, 164, 91, .16) 0 2.4%, transparent 3%);
+}
+.ph--2 {
+  background:
+    linear-gradient(112deg, transparent 28%, rgba(243, 239, 231, .11) 40%, rgba(243, 239, 231, .03) 50%, transparent 58%),
+    linear-gradient(112deg, transparent 52%, rgba(198, 164, 91, .12) 62%, transparent 70%),
+    radial-gradient(70% 60% at 30% 80%, rgba(198, 164, 91, .22), transparent 70%),
+    linear-gradient(200deg, #171717 0%, #0c0c0c 60%, #080808 100%);
+}
+.ph--3 {
+  background:
+    radial-gradient(36% 46% at 38% 44%, rgba(243, 239, 231, .2), transparent 70%),
+    radial-gradient(60% 60% at 40% 46%, rgba(198, 164, 91, .3), transparent 72%),
+    radial-gradient(40% 40% at 90% 90%, rgba(198, 164, 91, .14), transparent 70%),
+    linear-gradient(140deg, #14110c 0%, #0a0a0a 65%, #080808 100%);
+}
+.ph-tag {
+  position: absolute; right: calc(clamp(10px, 1.6vw, 26px) + 1.2rem); top: calc(var(--nav-h) + 1.2rem);
+  font: 500 .55rem/1.6 var(--ff-label); letter-spacing: .26em; text-transform: uppercase; color: var(--ivory-60);
+  text-align: right; transition: opacity .6s; pointer-events: none;
+}
+.slide.has-image .ph-tag { opacity: 0; }
+
+.hero__shade {
+  position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 72% 38%, transparent 25%, rgba(8, 8, 8, .7) 100%),
+    linear-gradient(to top, rgba(8, 8, 8, .94) 0%, rgba(8, 8, 8, .28) 42%, rgba(8, 8, 8, .6) 100%),
+    linear-gradient(to right, rgba(8, 8, 8, .6), transparent 65%);
+}
+.hero__grain {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .09; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.hero__frame {
+  position: absolute; inset: clamp(10px, 1.6vw, 26px); z-index: 3; pointer-events: none;
+  border: 1px solid rgba(198, 164, 91, .24);
+}
+.hero__frame::before, .hero__frame::after {
+  content: ""; position: absolute; width: 14px; height: 14px; border: 1px solid var(--gold);
+}
+.hero__frame::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.hero__frame::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+.hero__content {
+  position: relative; z-index: 2; align-self: end;
+  padding-top: calc(var(--nav-h) + 2rem); padding-bottom: clamp(2rem, 6vh, 4.5rem);
+  display: grid; gap: clamp(1.4rem, 3vh, 2.4rem);
+}
+.hero__title { font-size: var(--fs-hero); max-width: 14ch; }
+.hero__line { display: block; overflow: hidden; padding: .04em 0 .12em; margin-bottom: -.1em; }
+.hero__line > span { display: block; }
+.hero__lede { max-width: 33rem; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .4rem; }
+.hero__badge {
+  display: inline-flex; align-items: center; gap: .8rem; width: fit-content;
+  font: 500 .58rem/1 var(--ff-label); letter-spacing: .28em; text-transform: uppercase; color: var(--ivory-60);
+}
+.hero__badge::before { content: ""; width: 6px; height: 6px; border: 1px solid var(--gold); transform: rotate(45deg); }
+
+.hero__side {
+  display: none; position: absolute; right: calc(clamp(10px, 1.6vw, 26px) + 1.4rem); top: 50%; z-index: 2;
+  writing-mode: vertical-rl; transform: translateY(-50%);
+  font: 500 .58rem/1 var(--ff-label); letter-spacing: .4em; text-transform: uppercase; color: var(--ivory-60);
+}
+
+.hero__rail {
+  position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding-top: 1.4rem; padding-bottom: calc(clamp(10px, 1.6vw, 26px) + 1.1rem);
+  border-top: 1px solid var(--ivory-12); margin-inline: auto; width: calc(100% - var(--gutter) * 2); padding-inline: 0; max-width: calc(var(--maxw) - var(--gutter) * 2);
+}
+.scrollcue { display: inline-flex; align-items: center; gap: 1rem; font: 500 .6rem/1 var(--ff-label); letter-spacing: .3em; text-transform: uppercase; color: var(--ivory-80); }
+.scrollcue__line { position: relative; width: 1px; height: 44px; background: var(--ivory-12); overflow: hidden; }
+.scrollcue__line::after { content: ""; position: absolute; left: 0; top: 0; width: 100%; height: 50%; background: var(--gold); animation: cue 2.4s var(--ease-io) infinite; }
+@keyframes cue { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(200%); } }
+
+.hero__cats { display: none; gap: 2rem; font: 500 .6rem/1 var(--ff-label); letter-spacing: .3em; text-transform: uppercase; color: var(--ivory-60); }
+.hero__cats li { display: inline-flex; align-items: center; gap: 2rem; }
+.hero__cats li + li::before { content: ""; width: 4px; height: 4px; background: var(--gold); transform: rotate(45deg); margin-right: 0; }
+
+.hero__ctrl { display: flex; align-items: center; gap: 1.1rem; }
+.hero__cap { display: none; font: italic 300 1.05rem/1 var(--ff-display); color: var(--ivory-80); max-width: 20ch; text-align: right; }
+.hero__count { font: 500 .68rem/1 var(--ff-label); letter-spacing: .2em; color: var(--ivory-60); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hero__count b { color: var(--ivory); font-weight: 500; }
+.hero__progress { display: none; width: 64px; height: 1px; background: var(--ivory-12); overflow: hidden; }
+.hero__progress i { display: block; height: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left; }
+.ctrl-btn { width: 40px; height: 40px; display: inline-grid; place-items: center; border: 1px solid var(--ivory-12); border-radius: 50%; transition: border-color .4s, background-color .4s, color .4s; }
+.ctrl-btn svg { width: 15px; height: 15px; stroke-width: 1.5; }
+.ctrl-btn .i-play { display: none; }
+.ctrl-btn[aria-pressed="true"] .i-play { display: block; }
+.ctrl-btn[aria-pressed="true"] .i-pause { display: none; }
+.ctrl-btn--arrow { display: none; }
+@media (hover: hover) { .ctrl-btn:hover { border-color: var(--gold); color: var(--gold); } }
+
+/* Entrance states (only when motion is allowed and JS is running) */
+.anim .hero__media { opacity: 0; }
+.anim .hero__frame { opacity: 0; }
+.anim .hero__line > span { opacity: 0; }
+.anim .hero [data-hero] { opacity: 0; }
+.anim .nav__inner { opacity: 0; }
+
+/* 8. STUB SECTIONS & FOOTER ---------------------------------------------- */
+.stub { position: relative; min-height: 70vh; min-height: 70svh; display: grid; align-items: center; padding-block: var(--s-6); border-top: 1px solid var(--ivory-12); background: var(--obsidian); }
+.stub:nth-of-type(even) { background: var(--charcoal); }
+.stub__inner { display: grid; gap: 1.6rem; }
+.stub__title { font-size: var(--fs-h2); }
+.stub__note { font: 500 .62rem/1.8 var(--ff-label); letter-spacing: .26em; text-transform: uppercase; color: var(--ivory-60); max-width: 46ch; }
+.foot { position: relative; overflow: hidden; background: var(--obsidian); border-top: 1px solid var(--ivory-12); padding: clamp(3.2rem, 7vw, 5.5rem) 0 max(1.6rem, env(safe-area-inset-bottom)); }
+.foot::before { content: ""; position: absolute; top: -1px; left: 8%; right: 8%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .55; }
+.foot__top { display: grid; gap: clamp(2.4rem, 5vw, 3.4rem); }
+.foot__brand { display: grid; gap: 1.4rem; align-content: start; max-width: 30rem; }
+.foot__tag { font: italic 300 clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem)/1.2 var(--ff-display); color: var(--ivory); }
+.foot__label { margin-bottom: 1.1rem; font: 500 .58rem/1 var(--ff-label); letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.foot__nav ul { display: grid; gap: .1rem; }
+.foot__nav a {
+  display: inline-flex; align-items: baseline; gap: .8rem; padding: .55rem 0;
+  font: 500 .7rem/1 var(--ff-label); letter-spacing: .22em; text-transform: uppercase; color: var(--ivory-80);
+  transition: color .4s, transform .6s var(--ease-lux);
+}
+.foot__nav .n { font-size: .55rem; color: var(--gold); letter-spacing: .1em; }
+@media (hover: hover) { .foot__nav a:hover { color: var(--gold); transform: translateX(6px); } }
+.foot__note { max-width: 36ch; font-size: .9rem; font-weight: 300; line-height: 1.75; color: var(--ivory-60); }
+.foot__word {
+  margin-top: clamp(2.5rem, 6vw, 5rem); overflow: hidden; text-align: center; white-space: nowrap; user-select: none;
+  font: 600 clamp(3.5rem, 15.5vw, 15rem)/.95 var(--ff-display); letter-spacing: .1em; padding-left: .1em;
+  color: transparent; -webkit-text-stroke: 1px rgba(198, 164, 91, .18);
+}
+.foot__bottom {
+  display: flex; flex-direction: column; gap: 1rem; margin-top: clamp(1.6rem, 4vw, 2.6rem); padding-top: 1.6rem;
+  border-top: 1px solid var(--ivory-12); font: 500 .58rem/1.9 var(--ff-label); letter-spacing: .2em; text-transform: uppercase; color: var(--ivory-60);
+}
+.foot__totop { display: inline-flex; align-items: center; gap: .7rem; width: fit-content; padding: .4rem 0; color: var(--ivory); border-bottom: 1px solid var(--gold-soft); transition: color .4s, border-color .4s; }
+.foot__totop svg { width: 1.2em; height: 1.2em; stroke-width: 1.5; color: var(--gold); }
+@media (hover: hover) { .foot__totop:hover { color: var(--gold); border-color: var(--gold); } }
+@media (min-width: 760px) {
+  .foot__top { grid-template-columns: 1.3fr .7fr; }
+  .foot__about { grid-column: 1 / -1; }
+  .foot__bottom { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+@media (min-width: 992px) {
+  .foot__top { grid-template-columns: 1.4fr .8fr 1fr; }
+  .foot__about { grid-column: auto; }
+}
+
+/* 8b. PORTFOLIO ---------------------------------------------------------- */
+.pf { position: relative; padding-block: var(--s-6); background: var(--obsidian); border-top: 1px solid var(--ivory-12); overflow: hidden; }
+.pf::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 60vw; height: 60vw; max-width: 920px; max-height: 920px;
+  transform: translate(-35%, -45%); pointer-events: none;
+  background: radial-gradient(closest-side, rgba(198, 164, 91, .10), transparent);
+}
+.pf > .container { position: relative; }
+.pf-head { display: grid; gap: clamp(1.6rem, 4vw, 3rem); margin-bottom: clamp(2.2rem, 5vw, 4rem); }
+.pf-head__title { display: grid; gap: 1.6rem; }
+.pf-h { font-size: var(--fs-h2); }
+.pf-head__side { display: grid; gap: 1.4rem; align-content: end; max-width: 34rem; }
+.pf-demo {
+  display: inline-flex; align-items: center; gap: .85rem; width: fit-content; padding: .75rem 1.05rem;
+  border: 1px solid var(--gold-soft); color: var(--gold);
+  font: 500 .58rem/1.5 var(--ff-label); letter-spacing: .24em; text-transform: uppercase;
+}
+.pf-demo::before { content: ""; flex: none; width: 6px; height: 6px; border: 1px solid var(--gold); transform: rotate(45deg); }
+
+/* filters */
+.pf-filters {
+  display: flex; gap: clamp(1.3rem, 2.8vw, 3rem); overflow-x: auto; margin-bottom: clamp(1.6rem, 3.4vw, 2.8rem);
+  border-block: 1px solid var(--ivory-12); scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity;
+}
+.pf-filters::-webkit-scrollbar { display: none; }
+.pf-filter {
+  position: relative; flex: none; display: inline-flex; align-items: flex-start; gap: .5rem; padding: 1.2rem 0 1.15rem;
+  font: 500 .68rem/1 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; white-space: nowrap;
+  color: var(--ivory-60); scroll-snap-align: start; transition: color .4s;
+}
+.pf-filter sup { font-size: .5rem; letter-spacing: .08em; color: var(--gold); opacity: .85; transform: translateY(-.2rem); font-variant-numeric: tabular-nums; }
+.pf-filter::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: right; transition: transform .7s var(--ease-lux);
+}
+.pf-filter[aria-pressed="true"] { color: var(--ivory); }
+.pf-filter[aria-pressed="true"]::after { transform: scaleX(1); transform-origin: left; }
+.pf-filter:focus-visible { outline-offset: -3px; }
+@media (hover: hover) { .pf-filter:hover { color: var(--ivory); } }
+
+/* masonry (columns are built by JS so filtering re-flows cleanly) */
+.pf-grid { --pf-gap: clamp(.6rem, 1.5vw, 1.5rem); display: flex; align-items: flex-start; gap: var(--pf-gap); min-height: 30vh; }
+.pf-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: var(--pf-gap); }
+.pf-item { margin: 0; }
+.anim .pf-item { opacity: 0; }
+
+.pf-tile {
+  position: relative; display: block; width: 100%; overflow: hidden; isolation: isolate; text-align: left;
+  background: var(--charcoal); color: var(--ivory); cursor: zoom-in; -webkit-tap-highlight-color: transparent;
+}
+.pf-tile::before {   /* placeholder plate shown until the photograph loads */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(70% 60% at 30% 25%, rgba(198, 164, 91, .16), transparent 70%),
+    linear-gradient(160deg, #1b1813, #0e0d0b);
+}
+.pf-tile::after {    /* gold inner frame on hover */
+  content: ""; position: absolute; inset: clamp(8px, 1vw, 14px); z-index: 4; pointer-events: none;
+  border: 1px solid rgba(198, 164, 91, 0); transform: scale(1.035);
+  transition: border-color .7s var(--ease-lux), transform 1s var(--ease-lux);
+}
+.pf-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0;
+  transform: scale(1.001); filter: saturate(.94) contrast(1.02);
+  transition: opacity .9s var(--ease-lux), transform 1.5s var(--ease-lux), filter .9s var(--ease-lux);
+}
+.pf-tile.is-loaded .pf-img { opacity: 1; }
+.pf-fail { display: none; position: absolute; inset: 0; z-index: 1; place-content: center; text-align: center; padding: 1rem; font: 500 .56rem/1.8 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-60); }
+.pf-tile.is-error .pf-fail { display: grid; }
+.pf-tile.is-error .pf-img { display: none; }
+
+.pf-shade {
+  position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity .8s var(--ease-lux);
+  background: linear-gradient(to top, rgba(8, 8, 8, .9) 0%, rgba(8, 8, 8, .28) 40%, transparent 64%), linear-gradient(to bottom, rgba(8, 8, 8, .5), transparent 24%);
+}
+.pf-num, .pf-open, .pf-cap { position: absolute; z-index: 3; }
+.pf-num {
+  top: clamp(.9rem, 1.7vw, 1.5rem); left: clamp(.9rem, 1.7vw, 1.6rem); font: 500 .58rem/1 var(--ff-label);
+  letter-spacing: .24em; color: var(--ivory-80); opacity: 0; transform: translateY(-6px); transition: opacity .6s, transform .8s var(--ease-lux);
+}
+.pf-open {
+  top: clamp(.7rem, 1.4vw, 1.2rem); right: clamp(.7rem, 1.4vw, 1.3rem); width: 38px; height: 38px; display: grid; place-items: center;
+  border: 1px solid var(--ivory-30); border-radius: 50%; color: var(--ivory); opacity: 0; transform: scale(.8);
+  transition: opacity .6s, transform .8s var(--ease-lux), background-color .4s, color .4s;
+}
+.pf-cap {
+  left: 0; right: 0; bottom: 0; display: grid; gap: .45rem; padding: clamp(.9rem, 1.9vw, 1.7rem);
+  opacity: 0; transform: translateY(14px); transition: opacity .7s var(--ease-lux), transform .9s var(--ease-lux);
+}
+.pf-cat { font: 500 .56rem/1 var(--ff-label); letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+.pf-name { font: 400 clamp(1.15rem, .9rem + .9vw, 1.8rem)/1.05 var(--ff-display); color: var(--ivory); }
+
+.pf-tile:focus-visible { outline-offset: -4px; }
+.pf-tile:focus-visible .pf-shade, .pf-tile:focus-visible .pf-num, .pf-tile:focus-visible .pf-open, .pf-tile:focus-visible .pf-cap { opacity: 1; transform: none; }
+.pf-tile:focus-visible::after { border-color: rgba(198, 164, 91, .6); transform: scale(1); }
+@media (hover: hover) {
+  .pf-tile:hover .pf-img { transform: scale(1.07); filter: saturate(1.06) contrast(1.04); }
+  .pf-tile:hover .pf-shade, .pf-tile:hover .pf-num, .pf-tile:hover .pf-open, .pf-tile:hover .pf-cap { opacity: 1; transform: none; }
+  .pf-tile:hover::after { border-color: rgba(198, 164, 91, .6); transform: scale(1); }
+  .pf-open:hover { background: var(--gold); color: var(--obsidian); }
+}
+@media (hover: none) {   /* touch: captions always visible, kept compact */
+  .pf-shade { opacity: 1; background: linear-gradient(to top, rgba(8, 8, 8, .82) 0%, transparent 48%); }
+  .pf-cap { opacity: 1; transform: none; padding: .7rem .75rem .75rem; gap: .3rem; }
+  .pf-name { font-size: 1.02rem; }
+  .pf-num, .pf-open { display: none; }
+  .pf-tile::after { display: none; }
+}
+
+.pf-foot { display: grid; gap: 1.6rem; align-items: center; margin-top: clamp(2.5rem, 6vw, 5rem); padding-top: 2rem; border-top: 1px solid var(--ivory-12); }
+.pf-note { max-width: 72ch; font: 500 .6rem/1.9 var(--ff-label); letter-spacing: .2em; text-transform: uppercase; color: var(--ivory-60); }
+@media (min-width: 900px) {
+  .pf-head { grid-template-columns: 1.25fr .75fr; align-items: end; }
+  .pf-foot { grid-template-columns: 1fr auto; gap: 3rem; }
+}
+html.lb-open, html.lb-open body { overflow: hidden; }
+
+/* lightbox */
+.lb {
+  position: fixed; inset: 0; z-index: 1100; display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  background: rgba(6, 6, 6, .97); color: var(--ivory); overscroll-behavior: contain;
+  opacity: 0; visibility: hidden; transition: opacity .5s var(--ease-lux), visibility 0s .5s;
+}
+.lb.is-open { opacity: 1; visibility: visible; transition: opacity .5s var(--ease-lux), visibility 0s 0s; }
+.lb__top {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem;
+  padding: max(.9rem, env(safe-area-inset-top)) var(--gutter) .9rem; border-bottom: 1px solid var(--ivory-12);
+}
+.lb__count { font: 500 .7rem/1 var(--ff-label); letter-spacing: .24em; color: var(--ivory-60); font-variant-numeric: tabular-nums; }
+.lb__count b { color: var(--ivory); font-weight: 500; }
+.lb__demo { font: 500 .54rem/1.5 var(--ff-label); letter-spacing: .26em; text-transform: uppercase; color: var(--gold); text-align: center; }
+.lb__close, .lb__nav {
+  display: inline-grid; place-items: center; border: 1px solid var(--ivory-12); border-radius: 50%;
+  transition: border-color .4s, background-color .4s, color .4s;
+}
+.lb__close { justify-self: end; width: 46px; height: 46px; }
+.lb__close svg, .lb__nav svg { width: 18px; height: 18px; stroke-width: 1.5; }
+.lb__nav { width: 56px; height: 56px; }
+.lb__nav[hidden] { display: none; }
+@media (hover: hover) { .lb__close:hover, .lb__nav:hover { border-color: var(--gold); color: var(--gold); } }
+.lb__stage {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: minmax(0, 1fr);
+  align-items: center; gap: clamp(.6rem, 2vw, 2rem); padding: clamp(.8rem, 2vw, 1.8rem) var(--gutter); min-height: 0; touch-action: pan-y;
+}
+.lb__fig { position: relative; margin: 0; height: 100%; min-height: 0; display: grid; place-items: center; }
+.lb__img {
+  display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100vh - 15rem); max-height: calc(100dvh - 15rem);
+  object-fit: contain; box-shadow: 0 30px 90px rgba(0, 0, 0, .65); user-select: none; -webkit-user-drag: none;
+  transition: opacity .6s var(--ease-lux), transform 1s var(--ease-lux);
+}
+.lb__fig.is-loading .lb__img { opacity: 0; transform: scale(.985); }
+.lb__spin {
+  position: absolute; width: 34px; height: 34px; border: 1px solid var(--gold-faint); border-top-color: var(--gold);
+  border-radius: 50%; animation: lbspin 1s linear infinite; opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+.lb__fig.is-loading .lb__spin { opacity: 1; }
+@keyframes lbspin { to { transform: rotate(360deg); } }
+.lb__cap {
+  display: grid; gap: .55rem; justify-items: center; text-align: center;
+  padding: 1rem var(--gutter) max(1.3rem, env(safe-area-inset-bottom)); border-top: 1px solid var(--ivory-12);
+}
+.lb__cat { font: 500 .6rem/1 var(--ff-label); letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+.lb__title { font: 300 clamp(1.5rem, 1.1rem + 1.4vw, 2.4rem)/1.1 var(--ff-display); font-style: italic; }
+.lb__credit { max-width: 80ch; font: 500 .56rem/1.8 var(--ff-label); letter-spacing: .18em; text-transform: uppercase; color: var(--ivory-60); }
+.lb__credit a { color: var(--ivory-80); border-bottom: 1px solid var(--gold-soft); transition: color .3s, border-color .3s; }
+@media (hover: hover) { .lb__credit a:hover { color: var(--gold); border-color: var(--gold); } }
+@media (max-width: 699px) {
+  .lb__stage { grid-template-columns: minmax(0, 1fr); padding-inline: .8rem; }
+  .lb__nav { position: absolute; top: 50%; z-index: 2; width: 44px; height: 44px; margin-top: -22px; background: rgba(8, 8, 8, .6); border-color: var(--ivory-30); }
+  .lb__nav--prev { left: .6rem; }
+  .lb__nav--next { right: .6rem; }
+  .lb__top { grid-template-columns: auto 1fr auto; }
+  .lb__demo { font-size: .5rem; letter-spacing: .2em; }
+  .lb__img { max-height: calc(100vh - 14rem); max-height: calc(100dvh - 14rem); }
+}
+
+/* 8c. SERVICES & PRICING ------------------------------------------------- */
+.svc { position: relative; padding-block: var(--s-6); background: var(--obsidian); border-top: 1px solid var(--ivory-12); overflow: hidden; }
+.svc::before {
+  content: ""; position: absolute; top: 0; right: 0; width: 62vw; height: 62vw; max-width: 960px; max-height: 960px;
+  transform: translate(35%, -40%); pointer-events: none;
+  background: radial-gradient(closest-side, rgba(198, 164, 91, .10), transparent);
+}
+.svc > .container { position: relative; }
+.svc-head { display: grid; gap: clamp(1.6rem, 4vw, 3rem); margin-bottom: clamp(2.4rem, 5.5vw, 4.5rem); }
+.svc-head__title { display: grid; gap: 1.6rem; }
+.svc-h { font-size: var(--fs-h2); max-width: 13ch; }
+.svc-head__side { display: grid; gap: 1.4rem; align-content: end; max-width: 34rem; }
+
+.svc-grid { --svc-gap: clamp(.9rem, 2vw, 2rem); display: grid; gap: var(--svc-gap); }
+.svc-card {
+  --svc-ar: 1.05; position: relative; isolation: isolate; display: flex; flex-direction: column;
+  background: var(--charcoal); border: 1px solid var(--ivory-12);
+  transition: border-color .7s var(--ease-lux), box-shadow .9s var(--ease-lux);
+}
+.svc-card::before {   /* gold line that draws across the top edge */
+  content: ""; position: absolute; left: -1px; right: -1px; top: -1px; height: 2px; z-index: 6; pointer-events: none;
+  background: linear-gradient(90deg, var(--gold), rgba(198, 164, 91, 0));
+  transform: scaleX(0); transform-origin: left; transition: transform .9s var(--ease-lux);
+}
+.anim .svc-card { opacity: 0; }
+
+.svc-media { position: relative; flex: 1 1 auto; aspect-ratio: var(--svc-ar); overflow: hidden; background: var(--obsidian); }
+.svc-zoom { position: absolute; inset: 0; will-change: transform; }
+.svc-ph {   /* CSS placeholder plate, visible until a photograph loads */
+  position: absolute; inset: 0; transition: transform 1.5s var(--ease-lux);
+  background:
+    radial-gradient(62% 56% at var(--px, 70%) var(--py, 30%), rgba(198, 164, 91, .34), transparent 66%),
+    radial-gradient(38% 38% at 12% 88%, rgba(198, 164, 91, .14), transparent 70%),
+    linear-gradient(160deg, #1c1812, #0c0b09);
+}
+.svc-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--op, 50% 40%);
+  opacity: 0; filter: saturate(.94) contrast(1.02);
+  transition: opacity .9s var(--ease-lux), transform 1.5s var(--ease-lux), filter .9s var(--ease-lux);
+}
+.svc-media.has-image .svc-img { opacity: 1; }
+.svc-shade { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, rgba(8, 8, 8, .78), transparent 46%), linear-gradient(to bottom, rgba(8, 8, 8, .42), transparent 28%); }
+.svc-media::after {   /* gold inner frame */
+  content: ""; position: absolute; inset: clamp(8px, 1vw, 14px); z-index: 3; pointer-events: none;
+  border: 1px solid rgba(198, 164, 91, 0); transform: scale(1.035);
+  transition: border-color .7s var(--ease-lux), transform 1s var(--ease-lux);
+}
+.svc-num {
+  position: absolute; z-index: 2; top: clamp(1rem, 1.8vw, 1.5rem); left: clamp(1rem, 1.8vw, 1.6rem);
+  font: 400 clamp(1.6rem, 1.2rem + 1.2vw, 2.4rem)/1 var(--ff-display); letter-spacing: .02em; color: var(--ivory);
+  transition: transform .9s var(--ease-lux), color .5s;
+}
+.svc-chip {
+  position: absolute; z-index: 2; left: clamp(1rem, 1.8vw, 1.6rem); bottom: clamp(1rem, 1.8vw, 1.5rem);
+  padding: .6rem .85rem; font: 500 .56rem/1 var(--ff-label); letter-spacing: .28em; text-transform: uppercase; color: var(--ivory);
+  border: 1px solid var(--ivory-30); background: rgba(8, 8, 8, .38); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.svc-phtag {
+  position: absolute; z-index: 2; right: clamp(1rem, 1.8vw, 1.6rem); top: clamp(1.1rem, 1.9vw, 1.6rem); text-align: right;
+  font: 500 .5rem/1.7 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-60); transition: opacity .6s;
+}
+.svc-media.has-image .svc-phtag { opacity: 0; }
+
+.svc-body { display: grid; gap: 1.1rem; padding: clamp(1.3rem, 2.2vw, 2.2rem); }
+.svc-title { font: 400 clamp(1.8rem, 1.3rem + 1.5vw, 2.7rem)/1.02 var(--ff-display); letter-spacing: -.01em; }
+.svc-title em { font-style: italic; font-weight: 300; color: var(--gold); }
+.svc-desc { max-width: 52ch; font-size: .95rem; font-weight: 300; line-height: 1.75; color: var(--ivory-80); }
+.svc-list { display: grid; gap: .6rem; padding-top: .3rem; }
+.svc-list li { position: relative; padding-left: 1.4rem; font: 500 .62rem/1.6 var(--ff-label); letter-spacing: .18em; text-transform: uppercase; color: var(--ivory-60); }
+.svc-list li::before { content: ""; position: absolute; left: 0; top: .5em; width: 5px; height: 5px; border: 1px solid var(--gold); transform: rotate(45deg); }
+
+.svc-foot { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1.2rem; margin-top: .6rem; padding-top: 1.3rem; border-top: 1px solid var(--ivory-12); }
+.svc-price { display: grid; gap: .5rem; }
+.svc-price__lbl { font: 500 .56rem/1 var(--ff-label); letter-spacing: .28em; text-transform: uppercase; color: var(--ivory-60); }
+.svc-price__val { font: 400 clamp(1.9rem, 1.5rem + 1.2vw, 2.6rem)/1 var(--ff-display); color: var(--ivory); font-variant-numeric: lining-nums; }
+.svc-price__val--text { font-style: italic; font-weight: 300; font-size: clamp(1.4rem, 1.15rem + .8vw, 1.85rem); color: var(--gold); }
+.svc-price__tag { font: 500 .52rem/1.5 var(--ff-label); letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+.svc-cta {
+  display: inline-flex; align-items: center; gap: .7rem; padding: .7rem 0; white-space: nowrap;
+  font: 500 .66rem/1 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; color: var(--ivory);
+  border-bottom: 1px solid var(--gold-soft); transition: color .4s, border-color .4s;
+}
+.svc-cta::after { content: ""; position: absolute; inset: 0; z-index: 5; }   /* whole card is the click target */
+.svc-cta svg { width: 1.15em; height: 1.15em; stroke-width: 1.5; color: var(--gold); transition: transform .6s var(--ease-lux); }
+.svc-cta:focus-visible { outline-offset: 6px; }
+.svc-card:has(.svc-cta:focus-visible) { border-color: var(--gold-soft); }
+.svc-card:has(.svc-cta:focus-visible)::before { transform: scaleX(1); }
+.svc-card:has(.svc-cta:focus-visible) .svc-media::after { border-color: rgba(198, 164, 91, .55); transform: scale(1); }
+
+@media (hover: hover) {
+  .svc-card:hover { border-color: var(--gold-soft); box-shadow: 0 34px 80px -34px rgba(0, 0, 0, .9); }
+  .svc-card:hover::before { transform: scaleX(1); }
+  .svc-card:hover .svc-img, .svc-card:hover .svc-ph { transform: scale(1.07); }
+  .svc-card:hover .svc-img { filter: saturate(1.06) contrast(1.04); }
+  .svc-card:hover .svc-media::after { border-color: rgba(198, 164, 91, .55); transform: scale(1); }
+  .svc-card:hover .svc-num { transform: translateX(6px); color: var(--gold); }
+  .svc-card:hover .svc-cta { color: var(--gold); border-color: var(--gold); }
+  .svc-card:hover .svc-cta svg { transform: translate(3px, -3px); }
+}
+
+.svc-bottom { display: grid; gap: 1.6rem; align-items: center; margin-top: clamp(2.5rem, 6vw, 5rem); padding-top: 2rem; border-top: 1px solid var(--ivory-12); }
+@media (min-width: 640px) {
+  .svc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .svc-card { --svc-ar: 1; }
+}
+@media (min-width: 900px) {
+  .svc-head { grid-template-columns: 1.25fr .75fr; align-items: end; }
+  .svc-bottom { grid-template-columns: 1fr auto; gap: 3rem; }
+}
+@media (min-width: 992px) {
+  .svc-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .svc-card--wide { grid-column: span 7; --svc-ar: 1.15; }
+  .svc-card--narrow { grid-column: span 5; --svc-ar: .8; }
+  .svc-card--wide .svc-list { grid-template-columns: 1fr 1fr; column-gap: 1.6rem; }
+}
+
+/* 8d. ABOUT / STUDIO ----------------------------------------------------- */
+.about { position: relative; padding-block: var(--s-6); background: var(--charcoal); border-top: 1px solid var(--ivory-12); overflow: hidden; }
+.about::before {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 60vw; height: 60vw; max-width: 900px; max-height: 900px;
+  transform: translate(-40%, 40%); pointer-events: none;
+  background: radial-gradient(closest-side, rgba(198, 164, 91, .09), transparent);
+}
+.about > .container { position: relative; }
+.about ol { list-style: none; }
+
+.about-split { display: grid; gap: clamp(3rem, 8vw, 6rem); align-items: center; }
+.about-visual { position: relative; width: 100%; max-width: 640px; padding-bottom: 14%; }
+.about-fig { margin: 0; position: relative; }
+.about-fig--a { width: 80%; }
+.about-fig--a::before {   /* gold corner accent */
+  content: ""; position: absolute; left: -14px; top: -14px; width: 58%; height: 52%; pointer-events: none;
+  border-left: 1px solid var(--gold-soft); border-top: 1px solid var(--gold-soft);
+}
+.about-fig--b { position: absolute; right: 0; bottom: 0; width: 46%; z-index: 2; }
+.about-clip { position: relative; overflow: hidden; aspect-ratio: var(--ar, 4 / 5); background: var(--obsidian); }
+.about-fig--b .about-clip { border: clamp(6px, 1.1vw, 12px) solid var(--charcoal); }
+.about-zoom { position: absolute; inset: 0; will-change: transform; }
+.about-ph {
+  position: absolute; inset: 0; transition: transform 1.5s var(--ease-lux);
+  background:
+    radial-gradient(62% 56% at var(--px, 70%) var(--py, 30%), rgba(198, 164, 91, .34), transparent 66%),
+    radial-gradient(38% 38% at 12% 88%, rgba(198, 164, 91, .14), transparent 70%),
+    linear-gradient(160deg, #1c1812, #0c0b09);
+}
+.about-img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--op, 50% 40%);
+  opacity: 0; filter: saturate(.94) contrast(1.03);
+  transition: opacity .9s var(--ease-lux), transform 1.5s var(--ease-lux);
+}
+.about-fig.has-image .about-img { opacity: 1; }
+.about-phtag {
+  position: absolute; z-index: 2; right: 1rem; top: 1rem; text-align: right;
+  font: 500 .5rem/1.7 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-60); transition: opacity .6s;
+}
+.about-fig.has-image .about-phtag { opacity: 0; }
+.about-cap { margin-top: 1rem; max-width: 36ch; font: 500 .54rem/1.8 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-60); }
+@media (hover: hover) {
+  .about-fig:hover .about-img, .about-fig:hover .about-ph { transform: scale(1.05); }
+}
+
+.about-copy { display: grid; gap: 1.6rem; align-content: center; }
+.about-h { font-size: clamp(2.3rem, 1.3rem + 3.2vw, 4.4rem); }
+.about-h .ln { display: block; overflow: hidden; padding: .04em 0 .12em; margin-bottom: -.1em; }
+.about-h .ln > span { display: block; }
+.about-lead { font: 300 clamp(1.5rem, 1.1rem + 1.5vw, 2.3rem)/1.3 var(--ff-display); color: var(--ivory); max-width: 30ch; }
+.about-actions { display: flex; flex-wrap: wrap; gap: 1rem; padding-top: .4rem; }
+
+/* tagline band */
+.about-band {
+  position: relative; display: grid; place-items: center; overflow: hidden; text-align: center;
+  margin-top: clamp(4.5rem, 10vw, 9rem); padding-block: clamp(3.2rem, 8vw, 6.5rem);
+  border-block: 1px solid var(--ivory-12);
+}
+.about-mark {
+  grid-area: 1 / 1; white-space: nowrap; pointer-events: none; user-select: none;
+  font: 600 clamp(5rem, 24vw, 22rem)/1 var(--ff-display); letter-spacing: .2em; color: transparent;
+  -webkit-text-stroke: 1px rgba(198, 164, 91, .14);
+}
+.about-statement {
+  grid-area: 1 / 1; position: relative; z-index: 1; max-width: 17ch; padding-inline: var(--gutter);
+  font: 300 clamp(2.4rem, 1.2rem + 5vw, 6rem)/1.04 var(--ff-display); letter-spacing: -.012em; color: var(--ivory);
+}
+.about-statement em { font-style: italic; color: var(--gold); }
+
+/* philosophy & approach */
+.about-block { margin-top: clamp(4.5rem, 10vw, 8rem); }
+.about-sub { display: grid; gap: 1.4rem; margin-bottom: clamp(2rem, 4.5vw, 3.6rem); }
+.about-h3 { font-size: clamp(2rem, 1.3rem + 2.4vw, 3.4rem); }
+.about-pillars, .about-steps { display: grid; gap: clamp(1.8rem, 3vw, 2.6rem); }
+.about-pillar, .about-step { position: relative; display: grid; gap: .9rem; align-content: start; padding-top: 1.7rem; }
+.about-pillar::before, .about-step::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--ivory-12); }
+.about-rule { position: absolute; left: 0; top: 0; width: 100%; height: 1px; background: var(--gold); }
+.about-n { font: italic 300 clamp(2.4rem, 2rem + 1.6vw, 3.4rem)/1 var(--ff-display); color: var(--gold); transition: transform .8s var(--ease-lux); }
+.about-pillar h4, .about-step h4 { font: 400 clamp(1.5rem, 1.2rem + 1vw, 2rem)/1.1 var(--ff-display); color: var(--ivory); }
+.about-pillar p, .about-step p { max-width: 38ch; font-size: .95rem; font-weight: 300; line-height: 1.75; color: var(--ivory-80); }
+.about-step__n { font: 500 .62rem/1 var(--ff-label); letter-spacing: .3em; color: var(--gold); }
+@media (hover: hover) { .about-pillar:hover .about-n { transform: translateX(8px); } }
+
+.about-foot { max-width: 78ch; margin-top: clamp(3rem, 7vw, 5.5rem); padding-top: 2rem; border-top: 1px solid var(--ivory-12); }
+
+@media (min-width: 760px) {
+  .about-pillars { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .about-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.4rem; }
+}
+@media (min-width: 992px) { .about-split { grid-template-columns: 1.05fr .95fr; } }
+@media (min-width: 1100px) { .about-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 479px) { .about-actions .btn { flex: 1 1 100%; } }
+
+/* 8e. CONTACT ------------------------------------------------------------ */
+.contact { --err: #D98B76; position: relative; padding-block: var(--s-6); background: var(--obsidian); border-top: 1px solid var(--ivory-12); overflow: hidden; }
+.contact::before, .contact::after {
+  content: ""; position: absolute; width: 60vw; height: 60vw; max-width: 900px; max-height: 900px; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(198, 164, 91, .10), transparent);
+}
+.contact::before { top: 0; left: 0; transform: translate(-40%, -40%); }
+.contact::after { right: 0; bottom: 0; transform: translate(40%, 40%); }
+.contact > .container { position: relative; z-index: 1; }
+
+.ct-grid { display: grid; gap: clamp(3rem, 7vw, 5rem); align-items: start; }
+.ct-intro { display: grid; gap: 1.7rem; }
+.ct-h { font-size: clamp(2.5rem, 1.3rem + 4.4vw, 5.6rem); }
+.ct-h .ln { display: block; overflow: hidden; padding: .04em 0 .12em; margin-bottom: -.1em; }
+.ct-h .ln > span { display: block; }
+.ct-lead { max-width: 36rem; }
+
+/* cinematic letterbox still */
+.ct-film { position: relative; margin: .4rem 0 0; }
+.ct-film__frame { position: relative; overflow: hidden; aspect-ratio: 21 / 9; background: var(--obsidian); border: 1px solid var(--ivory-12); }
+.ct-film__zoom { position: absolute; inset: 0; will-change: transform; }
+.ct-ph {
+  position: absolute; inset: 0; transition: transform 1.5s var(--ease-lux);
+  background:
+    radial-gradient(60% 90% at 70% 20%, rgba(198, 164, 91, .34), transparent 66%),
+    radial-gradient(40% 60% at 10% 90%, rgba(198, 164, 91, .14), transparent 70%),
+    linear-gradient(160deg, #1c1812, #0c0b09);
+}
+.ct-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--op, 50% 50%); opacity: 0; filter: saturate(.94) contrast(1.03); transition: opacity .9s var(--ease-lux), transform 1.5s var(--ease-lux); }
+.ct-film.has-image .ct-img { opacity: 1; }
+.ct-film__shade { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(8, 8, 8, .55), transparent 60%); }
+.ct-film figcaption { margin-top: .9rem; font: 500 .54rem/1.8 var(--ff-label); letter-spacing: .24em; text-transform: uppercase; color: var(--ivory-60); }
+@media (hover: hover) { .ct-film:hover .ct-img, .ct-film:hover .ct-ph { transform: scale(1.05); } }
+
+/* information list */
+.ct-info { display: grid; margin-top: .4rem; border-top: 1px solid var(--ivory-12); }
+.ct-item { display: flex; align-items: center; gap: 1.2rem; padding: 1.25rem 0; border-bottom: 1px solid var(--ivory-12); }
+.ct-ico { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--gold-soft); border-radius: 50%; color: var(--gold); transition: background-color .5s, color .5s, border-color .5s; }
+.ct-ico svg { width: 18px; height: 18px; stroke-width: 1.5; }
+@media (hover: hover) { .ct-item:hover .ct-ico { background: var(--gold); border-color: var(--gold); color: var(--obsidian); } }
+.ct-k { margin-bottom: .55rem; font: 500 .58rem/1 var(--ff-label); letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+.ct-v { font: italic 300 clamp(1.1rem, 1rem + .4vw, 1.35rem)/1.35 var(--ff-display); color: var(--ivory-80); }
+
+/* form card */
+.ct-formwrap { position: relative; }
+.ct-formwrap::before, .ct-formwrap::after { content: ""; position: absolute; z-index: 2; width: 16px; height: 16px; border: 1px solid var(--gold); pointer-events: none; }
+.ct-formwrap::before { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.ct-formwrap::after { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+.ct-form, .ct-success { position: relative; background: var(--charcoal); border: 1px solid var(--ivory-12); padding: clamp(1.5rem, 3.6vw, 3.2rem); }
+.ct-form { display: grid; gap: clamp(1.4rem, 2.4vw, 2rem); }
+.ct-form[hidden], .ct-success[hidden] { display: none; }
+.ct-form__head { display: grid; gap: .9rem; justify-items: start; padding-bottom: 1.4rem; border-bottom: 1px solid var(--ivory-12); }
+.ct-form__title { font: 400 clamp(1.9rem, 1.4rem + 1.8vw, 2.8rem)/1.05 var(--ff-display); }
+.ct-form__title em { font-style: italic; font-weight: 300; color: var(--gold); }
+.ct-fields { display: grid; gap: clamp(1.4rem, 2.4vw, 2rem) 2rem; }
+.field--full { grid-column: 1 / -1; }
+
+.field { position: relative; display: grid; gap: .55rem; align-content: start; min-width: 0; }
+.field__row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.field__label { font: 500 .6rem/1.4 var(--ff-label); letter-spacing: .26em; text-transform: uppercase; color: var(--ivory-60); transition: color .4s; }
+.field__opt, .field__count { font: 500 .52rem/1 var(--ff-label); letter-spacing: .22em; text-transform: uppercase; color: rgba(243, 239, 231, .4); font-variant-numeric: tabular-nums; }
+.field__box { position: relative; }
+.field__ctl {
+  display: block; width: 100%; padding: .75rem 0 .85rem; border: 0; border-bottom: 1px solid rgba(243, 239, 231, .22); border-radius: 0;
+  background: transparent; color: var(--ivory); font: 300 1.08rem/1.5 var(--ff-body); outline: 0; color-scheme: dark;
+  -webkit-appearance: none; appearance: none; transition: border-color .4s;
+}
+.field__ctl::placeholder { color: rgba(243, 239, 231, .34); }
+.field__ctl:-webkit-autofill { -webkit-text-fill-color: var(--ivory); caret-color: var(--gold); box-shadow: 0 0 0 1000px var(--charcoal) inset; }
+.field__line { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .7s var(--ease-lux); }
+.field:focus-within .field__line { transform: scaleX(1); }
+.field:focus-within .field__label { color: var(--gold); }
+@media (hover: hover) { .field__ctl:hover { border-bottom-color: rgba(243, 239, 231, .45); } }
+select.field__ctl {
+  padding-right: 1.8rem; cursor: pointer; background-repeat: no-repeat; background-position: right .1rem center;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23C6A45B' stroke-width='1.3' stroke-linecap='round' stroke-linejoin='round'><path d='M1 1.5l5 5 5-5'/></svg>");
+}
+select.field__ctl:has(option[value=""]:checked) { color: rgba(243, 239, 231, .4); }
+select.field__ctl option { background: #171717; color: var(--ivory); }
+.field__ctl[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: .7; filter: invert(.78) sepia(.5) saturate(2) hue-rotate(5deg); }
+textarea.field__ctl { min-height: 9.5rem; resize: vertical; line-height: 1.7; }
+.field__err { font: 500 .62rem/1.5 var(--ff-label); letter-spacing: .1em; color: var(--err); }
+.field__err:empty { display: none; }
+.field.is-invalid .field__ctl { border-bottom-color: var(--err); }
+.field.is-invalid .field__line { background: var(--err); transform: scaleX(1); }
+.field.is-invalid .field__label { color: var(--err); }
+
+.ct-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.4rem; padding-top: 1.4rem; border-top: 1px solid var(--ivory-12); }
+.ct-note { flex: 1 1 18rem; max-width: 36ch; font: 500 .56rem/1.9 var(--ff-label); letter-spacing: .2em; text-transform: uppercase; color: var(--ivory-60); }
+.ct-actions .btn { flex: 0 0 auto; }
+
+.ct-success { display: grid; gap: 1.3rem; align-content: center; justify-items: start; }
+.ct-success:focus { outline: none; }
+.ct-success__mark { display: grid; place-items: center; width: 64px; height: 64px; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold); }
+.ct-success__mark svg { width: 26px; height: 26px; }
+.ct-success__title { font: 400 clamp(2rem, 1.4rem + 2.4vw, 3.4rem)/1.05 var(--ff-display); }
+.ct-success__title em { font-style: italic; font-weight: 300; color: var(--gold); }
+.ct-success p { max-width: 42ch; font-weight: 300; color: var(--ivory-80); }
+.ct-success:not([hidden]) > * { animation: ctIn .9s var(--ease-lux) both; animation-delay: calc(var(--i, 0) * .1s); }
+@keyframes ctIn { from { opacity: 0; transform: translateY(18px); } }
+
+@media (min-width: 640px) { .ct-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 992px) { .ct-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(3rem, 6vw, 6rem); } }
+@media (max-width: 479px) { .ct-actions .btn { width: 100%; } }
+
+/* 9. RESPONSIVE & ACCESSIBILITY ------------------------------------------ */
+@media (min-width: 640px) {
+  .hero__cap { display: block; }
+  .hero__progress { display: block; }
+  .intro__demo { font-size: .64rem; }
+}
+@media (min-width: 992px) {
+  .nav__links, .nav__cta { display: inline-flex; }
+  .nav__links { margin-left: auto; }
+  .burger, .menu { display: none; }
+  .hero__cats { display: flex; }
+  .ctrl-btn--arrow { display: inline-grid; }
+  .hero__content { grid-template-columns: 1fr; }
+}
+@media (min-width: 1100px) { .hero__side { display: block; } }
+@media (max-width: 991px) {
+  .hero__rail { flex-wrap: wrap; }
+}
+@media (max-width: 479px) {
+  .logo__sub { letter-spacing: .3em; }
+  .logo__name { font-size: 1.1rem; }
+  .hero__actions .btn { flex: 1 1 100%; }
+  .intro__foot { grid-template-columns: 1fr auto; }
+  .intro__demo { grid-column: 1 / -1; grid-row: 2; padding-top: .4rem; }
+  .ph-tag { display: none; }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  .hero__lede { display: none; }
+  .hero__title { font-size: clamp(2.2rem, 7vh + 1vw, 4rem); }
+  .scrollcue__line { height: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .intro { display: none !important; }
+  .scrollcue__line::after { animation: none; }
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ========== CINEMATIC INTRO ========== -->
+<div class="intro" id="intro" role="dialog" aria-label="Studio introduction">
+  <div class="intro__bar intro__bar--top"></div>
+  <div class="intro__bar intro__bar--bottom"></div>
+
+  <div class="intro__center">
+    <svg class="intro__mark" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <circle class="draw" cx="60" cy="60" r="54" pathLength="1"/>
+      <circle class="draw" cx="60" cy="60" r="46" pathLength="1" opacity=".5"/>
+      <path class="draw" d="M45 34v48h32" pathLength="1" stroke-width="2.4"/>
+      <path class="draw" d="M62 34l22 22" pathLength="1" opacity=".7"/>
+    </svg>
+    <div class="intro__brand" id="introBrand" aria-label="Lumora">Lumora</div>
+    <div class="intro__sub">Cinematic Studios</div>
+    <p class="intro__tag">Capturing Moments, Creating Legacies.</p>
+  </div>
+
+  <div class="intro__foot">
+    <span class="intro__count" id="introCount" aria-hidden="true">000</span>
+    <span class="intro__demo">Fictional demo brand</span>
+    <button class="intro__skip" id="introSkip" type="button">Skip intro <i data-lucide="skip-forward" aria-hidden="true"></i></button>
+  </div>
+  <div class="intro__line" id="introLine"></div>
+</div>
+
+<!-- ========== NAVIGATION ========== -->
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="logo" href="#top" aria-label="Lumora Cinematic Studios — back to top">
+      <svg class="logo__mark" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" aria-hidden="true">
+        <circle cx="60" cy="60" r="54"/><path d="M45 34v48h32" stroke-width="5"/><path d="M62 34l22 22" opacity=".6"/>
+      </svg>
+      <span class="logo__txt"><span class="logo__name">LUMORA</span><span class="logo__sub">Cinematic Studios</span></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#work" data-link="work"><span class="n">01</span>Portfolio</a>
+      <a href="#services" data-link="services"><span class="n">02</span>Services</a>
+      <a href="#about" data-link="about"><span class="n">03</span>Studio</a>
+      <a href="#contact" data-link="contact"><span class="n">04</span>Contact</a>
+    </nav>
+    <a class="btn btn--sm nav__cta" href="#contact">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile menu -->
+<div class="menu" id="menu" aria-hidden="true" inert>
+  <nav class="menu__list" aria-label="Mobile">
+    <div class="menu__row"><a class="menu__link" style="--i:0" href="#work"><span class="n">01</span>Portfolio</a></div>
+    <div class="menu__row"><a class="menu__link" style="--i:1" href="#services"><span class="n">02</span>Services</a></div>
+    <div class="menu__row"><a class="menu__link" style="--i:2" href="#about"><span class="n">03</span>Studio</a></div>
+    <div class="menu__row"><a class="menu__link" style="--i:3" href="#contact"><span class="n">04</span>Contact</a></div>
+  </nav>
+  <div class="menu__foot">
+    <p class="menu__tag">Capturing Moments, Creating Legacies.</p>
+    <p class="menu__note">Fictional demo brand &mdash; no real business or contact details.</p>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="top" aria-label="Lumora Cinematic Studios">
+    <div class="hero__media" aria-hidden="true">
+      <!--
+        HERO PHOTOGRAPHS — royalty-free Unsplash stock images, used as fictional demo content (not client work):
+          1  John Marfe Bitoon     https://unsplash.com/photos/bride-and-groom-embracing-at-sunset-AD3k4pko7wo
+          2  Mary Sill             https://unsplash.com/photos/a-silhouette-of-a-man-and-a-woman-holding-each-other-ZRMHeRV_xE8
+          3  Muhammad Ruqi Yaddin  https://unsplash.com/photos/woman-sitting-in-chair-with-hand-on-head-nMWiDGhqYUY
+        TO REPLACE: change the photo id in data-src and in every data-srcset entry (or paste your own optimised
+        16:9 files, ideally 2400×1350). Keep sizes="100vw". Update alt, data-caption and the photographer line.
+        The Unsplash parameters fit=crop & crop=faces,entropy ask the image host for a 16:9 crop centred on the subject.
+        A soft gold-toned plate shows until each photograph has loaded.
+      -->
+      <figure class="slide is-active" data-caption="Golden Vows — Weddings" data-img>
+        <div class="ph ph--1"></div>
+        <img class="slide__img" alt="Bride and groom sharing a tender embrace at golden hour as the setting sun glows behind them"
+             data-src="https://images.unsplash.com/photo-1761211488163-67bc659a8180?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=2000&amp;h=1125&amp;q=72"
+             data-srcset="https://images.unsplash.com/photo-1761211488163-67bc659a8180?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=1200&amp;h=675&amp;q=72 1200w, https://images.unsplash.com/photo-1761211488163-67bc659a8180?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=1800&amp;h=1013&amp;q=72 1800w, https://images.unsplash.com/photo-1761211488163-67bc659a8180?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=2400&amp;h=1350&amp;q=72 2400w"
+             sizes="100vw" width="2400" height="1350" decoding="async" fetchpriority="high">
+        <figcaption class="ph-tag">Photograph by John Marfe Bitoon<br>via Unsplash</figcaption>
+      </figure>
+      <figure class="slide" data-caption="Dusk Embrace — Pre-Wedding" data-img>
+        <div class="ph ph--2"></div>
+        <img class="slide__img" alt="Silhouette of a couple holding each other in a grassy field at sunset"
+             data-src="https://images.unsplash.com/photo-1512764676570-7dc3f1a626d1?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=2000&amp;h=1125&amp;q=72"
+             data-srcset="https://images.unsplash.com/photo-1512764676570-7dc3f1a626d1?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=1200&amp;h=675&amp;q=72 1200w, https://images.unsplash.com/photo-1512764676570-7dc3f1a626d1?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=1800&amp;h=1013&amp;q=72 1800w, https://images.unsplash.com/photo-1512764676570-7dc3f1a626d1?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=2400&amp;h=1350&amp;q=72 2400w"
+             sizes="100vw" width="2400" height="1350" decoding="async" loading="lazy" fetchpriority="low">
+        <figcaption class="ph-tag">Photograph by Mary Sill<br>via Unsplash</figcaption>
+      </figure>
+      <figure class="slide" data-caption="Quiet Light — Portraits" data-img>
+        <div class="ph ph--3"></div>
+        <img class="slide__img" alt="Moody black-and-white editorial portrait of a young woman seated in an armchair, her hand resting on her head"
+             data-src="https://images.unsplash.com/photo-1758178877907-3ef4e55553fb?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=2000&amp;h=1125&amp;q=72"
+             data-srcset="https://images.unsplash.com/photo-1758178877907-3ef4e55553fb?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=1200&amp;h=675&amp;q=72 1200w, https://images.unsplash.com/photo-1758178877907-3ef4e55553fb?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=1800&amp;h=1013&amp;q=72 1800w, https://images.unsplash.com/photo-1758178877907-3ef4e55553fb?auto=format&amp;fit=crop&amp;crop=faces,entropy&amp;w=2400&amp;h=1350&amp;q=72 2400w"
+             sizes="100vw" width="2400" height="1350" decoding="async" loading="lazy" fetchpriority="low">
+        <figcaption class="ph-tag">Photograph by Muhammad Ruqi Yaddin<br>via Unsplash</figcaption>
+      </figure>
+    </div>
+    <div class="hero__shade" aria-hidden="true"></div>
+    <div class="hero__grain" aria-hidden="true"></div>
+    <div class="hero__frame" aria-hidden="true"></div>
+    <p class="hero__side" aria-hidden="true">Fictional demo &mdash; photography portfolio</p>
+
+    <div class="container hero__content">
+      <p class="eyebrow" data-hero>Lumora Cinematic Studios</p>
+      <h1 class="display hero__title" aria-label="Capturing Moments, Creating Legacies.">
+        <span class="hero__line" aria-hidden="true"><span>Capturing</span></span>
+        <span class="hero__line" aria-hidden="true"><span>Moments,</span></span>
+        <span class="hero__line" aria-hidden="true"><span>Creating <em>Legacies.</em></span></span>
+      </h1>
+      <p class="lead hero__lede" data-hero>Weddings, portraits and celebrations composed in natural light and graded with a filmmaker&rsquo;s restraint &mdash; timeless imagery made to be handed down.</p>
+      <div class="hero__actions" data-hero>
+        <a class="btn" href="#work">View Portfolio <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+        <a class="btn btn--ghost" href="#contact">Begin an Enquiry</a>
+      </div>
+      <p class="hero__badge" data-hero>Fictional demo &middot; Stock photography</p>
+    </div>
+
+    <div class="hero__rail" data-hero>
+      <a class="scrollcue" href="#work" aria-label="Scroll to portfolio"><span class="scrollcue__line" aria-hidden="true"></span><span>Scroll</span></a>
+      <ul class="hero__cats" aria-label="Photography disciplines (demo)">
+        <li>Weddings</li><li>Portraits</li><li>Editorial</li><li>Commercial</li>
+      </ul>
+      <div class="hero__ctrl" role="group" aria-label="Hero image controls">
+        <span class="hero__cap" id="heroCap">Golden Vows — Weddings</span>
+        <span class="hero__count" aria-live="off"><b id="heroCur">01</b> / 03</span>
+        <span class="hero__progress" aria-hidden="true"><i id="heroBar"></i></span>
+        <button class="ctrl-btn ctrl-btn--arrow" id="heroPrev" type="button" aria-label="Previous image"><i data-lucide="arrow-left" aria-hidden="true"></i></button>
+        <button class="ctrl-btn ctrl-btn--arrow" id="heroNext" type="button" aria-label="Next image"><i data-lucide="arrow-right" aria-hidden="true"></i></button>
+        <button class="ctrl-btn" id="heroPause" type="button" aria-pressed="false" aria-label="Pause slideshow"><i class="i-pause" data-lucide="pause" aria-hidden="true"></i><i class="i-play" data-lucide="play" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PORTFOLIO ========== -->
+  <section class="pf" id="work" aria-labelledby="work-h">
+    <div class="container">
+      <header class="pf-head">
+        <div class="pf-head__title">
+          <p class="eyebrow"><span class="eyebrow__num">01</span> Portfolio</p>
+          <h2 class="display pf-h" id="work-h">Selected <em>Work</em></h2>
+        </div>
+        <div class="pf-head__side">
+          <p class="lead">A study in light, restraint and emotion across six disciplines &mdash; shown here with placeholder photography to demonstrate the gallery.</p>
+          <p class="pf-demo">Fictional demo portfolio &middot; Stock photography</p>
+        </div>
+      </header>
+
+      <div class="pf-filters" id="pfFilters" role="group" aria-label="Filter portfolio by category">
+        <button class="pf-filter" type="button" data-filter="all" aria-pressed="true">All<sup data-pf-count="all"></sup></button>
+        <button class="pf-filter" type="button" data-filter="weddings" aria-pressed="false">Weddings<sup data-pf-count="weddings"></sup></button>
+        <button class="pf-filter" type="button" data-filter="pre-wedding" aria-pressed="false">Pre-Wedding<sup data-pf-count="pre-wedding"></sup></button>
+        <button class="pf-filter" type="button" data-filter="portraits" aria-pressed="false">Portraits<sup data-pf-count="portraits"></sup></button>
+        <button class="pf-filter" type="button" data-filter="maternity" aria-pressed="false">Maternity<sup data-pf-count="maternity"></sup></button>
+        <button class="pf-filter" type="button" data-filter="events" aria-pressed="false">Events<sup data-pf-count="events"></sup></button>
+        <button class="pf-filter" type="button" data-filter="commercial" aria-pressed="false">Commercial<sup data-pf-count="commercial"></sup></button>
+      </div>
+      <p class="sr-only" id="pfStatus" role="status" aria-live="polite"></p>
+
+      <div class="pf-grid" id="pfGrid">
+        <noscript><p class="pf-note">Please enable JavaScript to view the portfolio gallery.</p></noscript>
+      </div>
+
+      <div class="pf-foot">
+        <p class="pf-note">Demo content &mdash; Lumora is a fictional brand. These are royalty-free stock photographs from Unsplash contributors, used as placeholders; they are not client work. Photographer credits appear in the viewer.</p>
+        <a class="btn btn--ghost" href="#contact">Begin an Enquiry</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES, STUDIO & CONTACT FOLLOW THE PORTFOLIO ========== -->
+
+  <!-- ========== SERVICES & PRICING ========== -->
+  <!--
+    REPLACEABLE CONTENT
+    Images : edit the data-src (and data-srcset) on each .svc-img. Delete data-srcset if you use a single file.
+    Prices : edit the text inside .svc-price__val. For no public price, use the "Enquire for pricing" block.
+    Every price on this page is FICTIONAL DEMO PRICING — remove the .svc-price__tag line once real prices are used.
+  -->
+  <section class="svc" id="services" aria-labelledby="services-h">
+    <div class="container">
+      <header class="svc-head">
+        <div class="svc-head__title">
+          <p class="eyebrow"><span class="eyebrow__num">02</span> Services &amp; Pricing</p>
+          <h2 class="display svc-h" id="services-h">Crafted for <em>every chapter</em></h2>
+        </div>
+        <div class="svc-head__side">
+          <p class="lead">From a single portrait to a multi-day celebration, each service is shaped around your story &mdash; presented here as placeholder packages for a fictional studio.</p>
+          <p class="pf-demo">Fictional demo pricing &middot; Not real offers</p>
+        </div>
+      </header>
+
+      <div class="svc-grid">
+
+        <!-- 01 Wedding Photography -->
+        <article class="svc-card svc-card--wide" data-service="wedding-photography">
+          <div class="svc-media" data-img style="--op:50% 45%; --px:72%; --py:28%">
+            <div class="svc-zoom">
+              <div class="svc-ph"></div>
+              <img class="svc-img" alt="A bride and groom kissing in front of a lake"
+                   data-src="https://images.unsplash.com/photo-1646325311277-0c35409fdd57?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                   data-srcset="https://images.unsplash.com/photo-1646325311277-0c35409fdd57?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1646325311277-0c35409fdd57?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1646325311277-0c35409fdd57?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                   sizes="(min-width: 992px) 58vw, (min-width: 640px) 48vw, 94vw" width="900" height="780" decoding="async">
+            </div>
+            <span class="svc-shade"></span>
+            <span class="svc-num" aria-hidden="true">01</span>
+            <span class="svc-chip">Photography</span>
+            <span class="svc-phtag" aria-hidden="true">Image placeholder</span>
+          </div>
+          <div class="svc-body">
+            <h3 class="svc-title">Wedding <em>Photography</em></h3>
+            <p class="svc-desc">Unhurried, documentary-led coverage of the ceremony, the rituals and the quiet moments in between.</p>
+            <ul class="svc-list">
+              <li>Full-day coverage</li>
+              <li>Second photographer option</li>
+              <li>Edited online gallery</li>
+              <li>Printed album (optional)</li>
+            </ul>
+            <div class="svc-foot">
+              <p class="svc-price">
+                <span class="svc-price__lbl">Starting from</span>
+                <span class="svc-price__val">$2,400</span>
+                <span class="svc-price__tag">Fictional demo price</span>
+              </p>
+              <a class="svc-cta" href="#contact" aria-label="Enquire about Wedding Photography">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 02 Pre-Wedding Photography & Films -->
+        <article class="svc-card svc-card--narrow" data-service="pre-wedding">
+          <div class="svc-media" data-img style="--op:50% 30%; --px:30%; --py:26%">
+            <div class="svc-zoom">
+              <div class="svc-ph"></div>
+              <img class="svc-img" alt="Black-and-white photograph of a couple facing each other in front of a curtain"
+                   data-src="https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                   data-srcset="https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1520342868574-5fa3804e551c?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                   sizes="(min-width: 992px) 42vw, (min-width: 640px) 48vw, 94vw" width="900" height="1120" decoding="async">
+            </div>
+            <span class="svc-shade"></span>
+            <span class="svc-num" aria-hidden="true">02</span>
+            <span class="svc-chip">Photo + Film</span>
+            <span class="svc-phtag" aria-hidden="true">Image placeholder</span>
+          </div>
+          <div class="svc-body">
+            <h3 class="svc-title">Pre-Wedding <em>Photography &amp; Films</em></h3>
+            <p class="svc-desc">A relaxed session in a place that means something to you, shaped into stills and a short teaser film.</p>
+            <ul class="svc-list">
+              <li>Half-day session</li>
+              <li>Location &amp; styling guidance</li>
+              <li>Edited stills</li>
+              <li>Short cinematic teaser</li>
+            </ul>
+            <div class="svc-foot">
+              <p class="svc-price">
+                <span class="svc-price__lbl">Starting from</span>
+                <span class="svc-price__val">$900</span>
+                <span class="svc-price__tag">Fictional demo price</span>
+              </p>
+              <a class="svc-cta" href="#contact" aria-label="Enquire about Pre-Wedding Photography and Films">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 Cinematic Films -->
+        <article class="svc-card svc-card--narrow" data-service="cinematic-films">
+          <div class="svc-media" data-img style="--op:50% 35%; --px:62%; --py:24%">
+            <div class="svc-zoom">
+              <div class="svc-ph"></div>
+              <img class="svc-img" alt="A newly married couple walking down the aisle"
+                   data-src="https://images.unsplash.com/photo-1723373457096-54329042b2b5?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                   data-srcset="https://images.unsplash.com/photo-1723373457096-54329042b2b5?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1723373457096-54329042b2b5?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1723373457096-54329042b2b5?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                   sizes="(min-width: 992px) 42vw, (min-width: 640px) 48vw, 94vw" width="900" height="1120" decoding="async">
+            </div>
+            <span class="svc-shade"></span>
+            <span class="svc-num" aria-hidden="true">03</span>
+            <span class="svc-chip">Film</span>
+            <span class="svc-phtag" aria-hidden="true">Image placeholder</span>
+          </div>
+          <div class="svc-body">
+            <h3 class="svc-title">Cinematic <em>Films</em></h3>
+            <p class="svc-desc">Story-led films with considered sound, colour and pacing &mdash; from a short highlight reel to a full-length feature.</p>
+            <ul class="svc-list">
+              <li>Highlight film</li>
+              <li>Feature-length edit</li>
+              <li>Licensed music</li>
+              <li>Aerial footage where permitted</li>
+            </ul>
+            <div class="svc-foot">
+              <p class="svc-price">
+                <span class="svc-price__lbl">Pricing</span>
+                <span class="svc-price__val svc-price__val--text">Enquire for pricing</span>
+              </p>
+              <a class="svc-cta" href="#contact" aria-label="Enquire about Cinematic Films">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 Portrait Photography -->
+        <article class="svc-card svc-card--wide" data-service="portrait-photography">
+          <div class="svc-media" data-img style="--op:50% 38%; --px:76%; --py:34%">
+            <div class="svc-zoom">
+              <div class="svc-ph"></div>
+              <img class="svc-img" alt="Black-and-white portrait of a man with his eyes closed"
+                   data-src="https://images.unsplash.com/photo-1647269039117-fbff346dc1e5?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                   data-srcset="https://images.unsplash.com/photo-1647269039117-fbff346dc1e5?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1647269039117-fbff346dc1e5?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1647269039117-fbff346dc1e5?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                   sizes="(min-width: 992px) 58vw, (min-width: 640px) 48vw, 94vw" width="900" height="780" decoding="async">
+            </div>
+            <span class="svc-shade"></span>
+            <span class="svc-num" aria-hidden="true">04</span>
+            <span class="svc-chip">Photography</span>
+            <span class="svc-phtag" aria-hidden="true">Image placeholder</span>
+          </div>
+          <div class="svc-body">
+            <h3 class="svc-title">Portrait <em>Photography</em></h3>
+            <p class="svc-desc">Studio or on-location portraits for individuals, families and creatives &mdash; lit with intent, directed with ease.</p>
+            <ul class="svc-list">
+              <li>60-minute session</li>
+              <li>Styling &amp; posing direction</li>
+              <li>Retouched selects</li>
+              <li>Print-ready files</li>
+            </ul>
+            <div class="svc-foot">
+              <p class="svc-price">
+                <span class="svc-price__lbl">Starting from</span>
+                <span class="svc-price__val">$350</span>
+                <span class="svc-price__tag">Fictional demo price</span>
+              </p>
+              <a class="svc-cta" href="#contact" aria-label="Enquire about Portrait Photography">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 Events Photography -->
+        <article class="svc-card svc-card--wide" data-service="events-photography">
+          <div class="svc-media" data-img style="--op:50% 50%; --px:50%; --py:22%">
+            <div class="svc-zoom">
+              <div class="svc-ph"></div>
+              <img class="svc-img" alt="A crowd holding up lights at a concert"
+                   data-src="https://images.unsplash.com/photo-1768405031181-33bb016e2fbb?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                   data-srcset="https://images.unsplash.com/photo-1768405031181-33bb016e2fbb?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1768405031181-33bb016e2fbb?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1768405031181-33bb016e2fbb?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                   sizes="(min-width: 992px) 58vw, (min-width: 640px) 48vw, 94vw" width="900" height="780" decoding="async">
+            </div>
+            <span class="svc-shade"></span>
+            <span class="svc-num" aria-hidden="true">05</span>
+            <span class="svc-chip">Photography</span>
+            <span class="svc-phtag" aria-hidden="true">Image placeholder</span>
+          </div>
+          <div class="svc-body">
+            <h3 class="svc-title">Events <em>Photography</em></h3>
+            <p class="svc-desc">Discreet, atmospheric coverage of celebrations, launches and gatherings &mdash; from the first guest to the final toast.</p>
+            <ul class="svc-list">
+              <li>Hourly or full-event coverage</li>
+              <li>Candid &amp; posed frames</li>
+              <li>Quick-turn highlights</li>
+              <li>Usage licence included</li>
+            </ul>
+            <div class="svc-foot">
+              <p class="svc-price">
+                <span class="svc-price__lbl">Starting from</span>
+                <span class="svc-price__val">$600</span>
+                <span class="svc-price__tag">Fictional demo price</span>
+              </p>
+              <a class="svc-cta" href="#contact" aria-label="Enquire about Events Photography">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 06 Commercial Photography -->
+        <article class="svc-card svc-card--narrow" data-service="commercial-photography">
+          <div class="svc-media" data-img style="--op:50% 50%; --px:40%; --py:30%">
+            <div class="svc-zoom">
+              <div class="svc-ph"></div>
+              <img class="svc-img" alt="Clear glass perfume bottle with a black cap"
+                   data-src="https://images.unsplash.com/photo-1760920250029-36af9369a0bb?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                   data-srcset="https://images.unsplash.com/photo-1760920250029-36af9369a0bb?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1760920250029-36af9369a0bb?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1760920250029-36af9369a0bb?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                   sizes="(min-width: 992px) 42vw, (min-width: 640px) 48vw, 94vw" width="900" height="1120" decoding="async">
+            </div>
+            <span class="svc-shade"></span>
+            <span class="svc-num" aria-hidden="true">06</span>
+            <span class="svc-chip">Commercial</span>
+            <span class="svc-phtag" aria-hidden="true">Image placeholder</span>
+          </div>
+          <div class="svc-body">
+            <h3 class="svc-title">Commercial <em>Photography</em></h3>
+            <p class="svc-desc">Considered imagery for brands &mdash; products, spaces and campaigns &mdash; built around your brief and your usage.</p>
+            <ul class="svc-list">
+              <li>Brief &amp; moodboard</li>
+              <li>Studio or on-location</li>
+              <li>Retouching &amp; colour grade</li>
+              <li>Licensing to suit usage</li>
+            </ul>
+            <div class="svc-foot">
+              <p class="svc-price">
+                <span class="svc-price__lbl">Pricing</span>
+                <span class="svc-price__val svc-price__val--text">Enquire for pricing</span>
+              </p>
+              <a class="svc-cta" href="#contact" aria-label="Enquire about Commercial Photography">Enquire <i data-lucide="arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="svc-bottom">
+        <p class="pf-note">Demo content &mdash; Lumora is a fictional brand. All prices are fictional demo figures for design purposes only, not real offers, and package details are placeholder copy. Placeholder photographs are royalty-free stock images via Unsplash by Anthony Tran, Marius Muresan, Ben Atkins, Darius Bashar, Rafael Garcin and Kier in Sight Archives.</p>
+        <a class="btn btn--ghost" href="#contact">Request a Custom Quote</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT / THE STUDIO ========== -->
+  <!--
+    REPLACEABLE CONTENT
+    Images : edit data-src / data-srcset / alt on the two .about-img elements.
+    Copy   : all text is imagined demo copy for a fictional studio; rewrite it with your own story when the studio is real.
+  -->
+  <section class="about" id="about" aria-labelledby="about-h">
+    <div class="container">
+
+      <div class="about-split">
+        <div class="about-visual">
+          <figure class="about-fig about-fig--a" data-img style="--ar:4/5; --op:50% 32%; --px:68%; --py:30%">
+            <div class="about-clip">
+              <div class="about-zoom">
+                <div class="about-ph"></div>
+                <img class="about-img" alt="Close-up portrait of a woman with red hair"
+                     data-src="https://images.unsplash.com/photo-1715541448338-0612a755acec?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                     data-srcset="https://images.unsplash.com/photo-1715541448338-0612a755acec?auto=format&amp;fit=max&amp;w=500&amp;q=70 500w, https://images.unsplash.com/photo-1715541448338-0612a755acec?auto=format&amp;fit=max&amp;w=800&amp;q=70 800w, https://images.unsplash.com/photo-1715541448338-0612a755acec?auto=format&amp;fit=max&amp;w=1100&amp;q=70 1100w"
+                     sizes="(min-width: 992px) 36vw, 78vw" width="800" height="1000" decoding="async">
+              </div>
+              <span class="about-phtag" aria-hidden="true">Image placeholder</span>
+            </div>
+            <figcaption class="about-cap">Demo photograph &middot; fictional studio</figcaption>
+          </figure>
+          <figure class="about-fig about-fig--b" data-img style="--ar:1; --op:50% 50%; --px:40%; --py:35%">
+            <div class="about-clip">
+              <div class="about-zoom">
+                <div class="about-ph"></div>
+                <img class="about-img" alt="Black and gold perfume bottle"
+                     data-src="https://images.unsplash.com/photo-1584841247175-4d766cefa018?auto=format&amp;fit=max&amp;w=640&amp;q=70"
+                     data-srcset="https://images.unsplash.com/photo-1584841247175-4d766cefa018?auto=format&amp;fit=max&amp;w=400&amp;q=70 400w, https://images.unsplash.com/photo-1584841247175-4d766cefa018?auto=format&amp;fit=max&amp;w=640&amp;q=70 640w, https://images.unsplash.com/photo-1584841247175-4d766cefa018?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w"
+                     sizes="(min-width: 992px) 22vw, 46vw" width="640" height="640" decoding="async">
+              </div>
+            </div>
+          </figure>
+        </div>
+
+        <div class="about-copy">
+          <p class="eyebrow" data-ab><span class="eyebrow__num">03</span> The Studio</p>
+          <h2 class="display about-h" id="about-h"><span class="ln"><span>A studio built</span></span><span class="ln"><span>on <em>light &amp; patience.</em></span></span></h2>
+          <p class="about-lead" data-ab>Lumora is an imagined studio with a single belief: a photograph should feel like a memory you can step back into.</p>
+          <p class="lead" data-ab>We treat every frame as a small piece of cinema &mdash; shaped by the quality of light, the rhythm of the moment and the people within it. Nothing is staged for show; everything is composed with care.</p>
+          <p class="lead" data-ab>Weddings, portraits, celebrations and brand work all begin the same way: by listening. What we learn becomes the direction for the light, the locations and the pace of the day.</p>
+          <div class="about-actions" data-ab>
+            <a class="btn" href="#contact">Begin an Enquiry <i data-lucide="arrow-right" aria-hidden="true"></i></a>
+            <a class="btn btn--ghost" href="#work">View Portfolio</a>
+          </div>
+          <p class="pf-demo" data-ab>Fictional demo studio &middot; Imagined story</p>
+        </div>
+      </div>
+
+      <div class="about-band">
+        <span class="about-mark" aria-hidden="true">LUMORA</span>
+        <p class="about-statement"><span class="w">Capturing</span> <span class="w">Moments,</span> <em><span class="w">Creating</span> <span class="w">Legacies.</span></em></p>
+      </div>
+
+      <div class="about-block">
+        <header class="about-sub">
+          <p class="eyebrow">Philosophy</p>
+          <h3 class="display about-h3">What we <em>believe</em></h3>
+        </header>
+        <div class="about-pillars">
+          <article class="about-pillar">
+            <span class="about-rule" aria-hidden="true"></span>
+            <span class="about-n" aria-hidden="true">01</span>
+            <h4>Light before everything</h4>
+            <p>We read the room, the hour and the window before we lift the camera &mdash; then let natural light lead wherever it can.</p>
+          </article>
+          <article class="about-pillar">
+            <span class="about-rule" aria-hidden="true"></span>
+            <span class="about-n" aria-hidden="true">02</span>
+            <h4>Direction without stiffness</h4>
+            <p>Gentle guidance keeps people at ease, so expressions stay honest and every frame feels unforced.</p>
+          </article>
+          <article class="about-pillar">
+            <span class="about-rule" aria-hidden="true"></span>
+            <span class="about-n" aria-hidden="true">03</span>
+            <h4>Made to be kept</h4>
+            <p>Considered colour, restrained retouching and an eye for the long view &mdash; images meant to age gracefully.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <header class="about-sub">
+          <p class="eyebrow">Creative approach</p>
+          <h3 class="display about-h3">How we <em>work</em></h3>
+        </header>
+        <ol class="about-steps">
+          <li class="about-step">
+            <span class="about-rule" aria-hidden="true"></span>
+            <span class="about-step__n">01</span>
+            <h4>Conversation</h4>
+            <p>We listen first &mdash; the people, the place and the feeling you want to hold onto.</p>
+          </li>
+          <li class="about-step">
+            <span class="about-rule" aria-hidden="true"></span>
+            <span class="about-step__n">02</span>
+            <h4>Direction</h4>
+            <p>A shared plan for light, locations and pacing, so the day can unfold naturally.</p>
+          </li>
+          <li class="about-step">
+            <span class="about-step__n">03</span>
+            <span class="about-rule" aria-hidden="true"></span>
+            <h4>Capture</h4>
+            <p>Present, unobtrusive and ready &mdash; framing moments as they happen rather than as they are arranged.</p>
+          </li>
+          <li class="about-step">
+            <span class="about-rule" aria-hidden="true"></span>
+            <span class="about-step__n">04</span>
+            <h4>Craft</h4>
+            <p>Selective editing and a consistent cinematic grade bring the whole story together.</p>
+          </li>
+        </ol>
+      </div>
+
+      <p class="pf-note about-foot">Demo content &mdash; Lumora Cinematic Studios is a fictional brand. This page is imagined copy: it describes no real history, team, awards or clients. Demo photographs are royalty-free stock images via Unsplash by Freddy Rezvanian and Mae Mu.</p>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <!--
+    REPLACEABLE CONTENT
+    Image : edit data-src / data-srcset / alt on .ct-img.
+    Info  : the four .ct-item rows describe a fictional studio on purpose — replace their .ct-v text with real details
+            only when this becomes a real site.
+    Form  : a VISUAL DEMO. It is validated in the browser and never sends or stores anything. To go live, connect the
+            submit handler in ctInit() to your own form service.
+  -->
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <div class="container">
+      <div class="ct-grid">
+
+        <div class="ct-intro">
+          <p class="eyebrow" data-ct><span class="eyebrow__num">04</span> Contact</p>
+          <h2 class="display ct-h" id="contact-h"><span class="ln"><span>Let&rsquo;s Create</span></span> <span class="ln"><span>Something <em>Timeless.</em></span></span></h2>
+          <p class="lead ct-lead" data-ct>Tell us about the day, the face or the brand you want remembered. Lumora is a fictional demo studio, so the form is a visual demonstration only &mdash; it does not send real enquiries.</p>
+
+          <figure class="ct-film" data-img style="--op:50% 50%">
+            <div class="ct-film__frame">
+              <div class="ct-film__zoom">
+                <div class="ct-ph"></div>
+                <img class="ct-img" alt="Silhouetted crowd enjoying a concert beneath bright stage lights"
+                     data-src="https://images.unsplash.com/photo-1768053921689-1bc09db904c9?auto=format&amp;fit=max&amp;w=900&amp;q=70"
+                     data-srcset="https://images.unsplash.com/photo-1768053921689-1bc09db904c9?auto=format&amp;fit=max&amp;w=600&amp;q=70 600w, https://images.unsplash.com/photo-1768053921689-1bc09db904c9?auto=format&amp;fit=max&amp;w=900&amp;q=70 900w, https://images.unsplash.com/photo-1768053921689-1bc09db904c9?auto=format&amp;fit=max&amp;w=1300&amp;q=70 1300w"
+                     sizes="(min-width: 992px) 45vw, 94vw" width="900" height="386" decoding="async">
+              </div>
+              <span class="ct-film__shade"></span>
+            </div>
+            <figcaption>Demo photograph &middot; Nicol&aacute;s Flor via Unsplash &middot; fictional studio</figcaption>
+          </figure>
+
+          <ul class="ct-info">
+            <li class="ct-item" data-ct>
+              <span class="ct-ico"><i data-lucide="map-pin" aria-hidden="true"></i></span>
+              <div><p class="ct-k">Studio</p><p class="ct-v">A fictional studio &mdash; no physical address</p></div>
+            </li>
+            <li class="ct-item" data-ct>
+              <span class="ct-ico"><i data-lucide="mail" aria-hidden="true"></i></span>
+              <div><p class="ct-k">Email</p><p class="ct-v">No real inbox &mdash; this is a visual demo</p></div>
+            </li>
+            <li class="ct-item" data-ct>
+              <span class="ct-ico"><i data-lucide="phone" aria-hidden="true"></i></span>
+              <div><p class="ct-k">Telephone</p><p class="ct-v">No real number &mdash; this is a visual demo</p></div>
+            </li>
+            <li class="ct-item" data-ct>
+              <span class="ct-ico"><i data-lucide="at-sign" aria-hidden="true"></i></span>
+              <div><p class="ct-k">Social</p><p class="ct-v">No real accounts &mdash; this is a visual demo</p></div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="ct-formwrap">
+          <form class="ct-form" novalidate autocomplete="on" aria-label="Enquiry form (visual demo)">
+            <div class="ct-form__head">
+              <h3 class="ct-form__title">Enquiry <em>Form</em></h3>
+              <p class="pf-demo">Visual demo &middot; Nothing is sent</p>
+            </div>
+
+            <div class="ct-fields">
+              <div class="field">
+                <div class="field__row"><label class="field__label" for="cf-name">Full Name</label></div>
+                <div class="field__box">
+                  <input class="field__ctl" id="cf-name" type="text" autocomplete="name" required aria-describedby="cf-name-err" placeholder="Your full name">
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+                <p class="field__err" id="cf-name-err"></p>
+              </div>
+
+              <div class="field">
+                <div class="field__row"><label class="field__label" for="cf-email">Email Address</label></div>
+                <div class="field__box">
+                  <input class="field__ctl" id="cf-email" type="email" autocomplete="email" inputmode="email" required aria-describedby="cf-email-err" placeholder="you@example.com">
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+                <p class="field__err" id="cf-email-err"></p>
+              </div>
+
+              <div class="field">
+                <div class="field__row"><label class="field__label" for="cf-phone">Phone Number</label></div>
+                <div class="field__box">
+                  <input class="field__ctl" id="cf-phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="cf-phone-err" placeholder="Your phone number">
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+                <p class="field__err" id="cf-phone-err"></p>
+              </div>
+
+              <div class="field">
+                <div class="field__row"><label class="field__label" for="cf-service">Photography Service</label></div>
+                <div class="field__box">
+                  <select class="field__ctl" id="cf-service" required aria-describedby="cf-service-err">
+                    <option value="" selected>Select a service</option>
+                    <option value="wedding">Wedding Photography</option>
+                    <option value="pre-wedding">Pre-Wedding Photography &amp; Films</option>
+                    <option value="films">Cinematic Films</option>
+                    <option value="portrait">Portrait Photography</option>
+                    <option value="events">Events Photography</option>
+                    <option value="commercial">Commercial Photography</option>
+                    <option value="other">Something else</option>
+                  </select>
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+                <p class="field__err" id="cf-service-err"></p>
+              </div>
+
+              <div class="field">
+                <div class="field__row"><label class="field__label" for="cf-date">Event Date</label><span class="field__opt">Optional</span></div>
+                <div class="field__box">
+                  <input class="field__ctl" id="cf-date" type="date" aria-describedby="cf-date-err">
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+                <p class="field__err" id="cf-date-err"></p>
+              </div>
+
+              <div class="field">
+                <div class="field__row"><label class="field__label" for="cf-budget">Budget Range</label><span class="field__opt">Optional</span></div>
+                <div class="field__box">
+                  <select class="field__ctl" id="cf-budget">
+                    <option value="" selected>Select a range</option>
+                    <option value="under-1000">Under $1,000</option>
+                    <option value="1000-2500">$1,000 &ndash; $2,500</option>
+                    <option value="2500-5000">$2,500 &ndash; $5,000</option>
+                    <option value="5000-10000">$5,000 &ndash; $10,000</option>
+                    <option value="10000-plus">$10,000 and above</option>
+                    <option value="undecided">Not sure yet</option>
+                  </select>
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+              </div>
+
+              <div class="field field--full">
+                <div class="field__row"><label class="field__label" for="cf-story">Tell Us About Your Story</label><span class="field__count" aria-hidden="true">0 / 1200</span></div>
+                <div class="field__box">
+                  <textarea class="field__ctl" id="cf-story" rows="5" maxlength="1200" required aria-describedby="cf-story-err" data-lenis-prevent placeholder="Share the occasion, the mood and the people who matter."></textarea>
+                  <span class="field__line" aria-hidden="true"></span>
+                </div>
+                <p class="field__err" id="cf-story-err"></p>
+              </div>
+            </div>
+
+            <div class="ct-actions">
+              <p class="ct-note">Visual demo &mdash; this form does not send real enquiries and nothing you type leaves this page.</p>
+              <button class="btn" type="submit">Submit Enquiry <i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            </div>
+          </form>
+
+          <div class="ct-success" tabindex="-1" role="status" hidden>
+            <span class="ct-success__mark" style="--i:0" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+            <h3 class="ct-success__title" style="--i:1">Thank you<span class="ct-name"></span>.</h3>
+            <p style="--i:2">This is a visual demo &mdash; your enquiry was not sent and nothing you entered was stored. In a live studio website, your confirmation would appear here.</p>
+            <button class="btn btn--ghost" type="button" style="--i:3" data-ct-reset>Start Again</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container">
+    <div class="foot__top">
+      <div class="foot__brand">
+        <a class="logo" href="#top" aria-label="Lumora Cinematic Studios — back to top">
+          <svg class="logo__mark" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" aria-hidden="true">
+            <circle cx="60" cy="60" r="54"/><path d="M45 34v48h32" stroke-width="5"/><path d="M62 34l22 22" opacity=".6"/>
+          </svg>
+          <span class="logo__txt"><span class="logo__name">LUMORA</span><span class="logo__sub">Cinematic Studios</span></span>
+        </a>
+        <p class="foot__tag">Capturing Moments, Creating Legacies.</p>
+      </div>
+
+      <nav class="foot__nav" aria-label="Footer">
+        <p class="foot__label">Explore</p>
+        <ul>
+          <li><a href="#work"><span class="n">01</span>Portfolio</a></li>
+          <li><a href="#services"><span class="n">02</span>Services</a></li>
+          <li><a href="#about"><span class="n">03</span>Studio</a></li>
+          <li><a href="#contact"><span class="n">04</span>Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="foot__about">
+        <p class="foot__label">About this demo</p>
+        <p class="foot__note">Lumora Cinematic Studios is a fictional brand created for design purposes only. Its photography is royalty-free stock, and its copy and prices are illustrative &mdash; there is no real studio, team, client or contact detail behind it.</p>
+      </div>
+    </div>
+
+    <p class="foot__word" aria-hidden="true">LUMORA</p>
+
+    <div class="foot__bottom">
+      <p>&copy; 2026 Lumora Cinematic Studios &middot; Fictional demo</p>
+      <a class="foot__totop" href="#top">Back to top <i data-lucide="arrow-up" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== PORTFOLIO LIGHTBOX ========== -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Portfolio image viewer" aria-hidden="true" inert>
+  <div class="lb__top">
+    <span class="lb__count"><b id="lbCur">01</b> / <span id="lbTot">00</span></span>
+    <span class="lb__demo">Fictional demo portfolio</span>
+    <button class="lb__close" id="lbClose" type="button" aria-label="Close viewer"><i data-lucide="x" aria-hidden="true"></i></button>
+  </div>
+  <div class="lb__stage" id="lbStage">
+    <button class="lb__nav lb__nav--prev" id="lbPrev" type="button" aria-label="Previous image"><i data-lucide="arrow-left" aria-hidden="true"></i></button>
+    <figure class="lb__fig is-loading" id="lbFig">
+      <img class="lb__img" id="lbImg" alt="" decoding="async" draggable="false">
+      <span class="lb__spin" aria-hidden="true"></span>
+    </figure>
+    <button class="lb__nav lb__nav--next" id="lbNext" type="button" aria-label="Next image"><i data-lucide="arrow-right" aria-hidden="true"></i></button>
+  </div>
+  <div class="lb__cap" aria-live="polite">
+    <p class="lb__cat" id="lbCat"></p>
+    <p class="lb__title" id="lbTitle"></p>
+    <p class="lb__credit" id="lbCredit"></p>
+  </div>
+</div>
+
+<!-- Libraries (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+
+<!--
+  ==========================================================================
+  PORTFOLIO DATA — edit this list to replace the demo images
+  --------------------------------------------------------------------------
+  Each entry:
+    cat     weddings | pre-wedding | portraits | maternity | events | commercial
+    title   short display title
+    alt     meaningful description of the photograph (for screen readers / SEO)
+    src     image URL. For Unsplash URLs paste the base URL (query string is
+            optional; the page adds optimised width/quality/crop itself).
+            For any other host, paste the full URL of an already-optimised image.
+    full    (optional) larger URL used only inside the lightbox
+    ratio   tile shape, width / height (0.8 = 4:5 portrait, 1 = square, 1.33 = 4:3)
+    credit  photographer name   (optional — remove when using your own work)
+    page    link to the source page (optional)
+  The array order is the order shown in "All". Categories show their own
+  counts automatically. These demo photographs are royalty-free stock images
+  from Unsplash contributors — NOT Lumora client work.
+  ==========================================================================
+-->
+<script>
+window.LUMORA_PORTFOLIO = [
+  { cat: 'weddings', title: 'Sunset Embrace', ratio: 0.8,
+    src: 'https://images.unsplash.com/photo-1761211488163-67bc659a8180',
+    alt: 'Bride and groom embracing at sunset',
+    credit: 'John Marfe Bitoon', page: 'https://unsplash.com/photos/bride-and-groom-embracing-at-sunset-AD3k4pko7wo' },
+  { cat: 'portraits', title: 'Ember', ratio: 0.8,
+    src: 'https://images.unsplash.com/photo-1715541448338-0612a755acec',
+    alt: 'Close-up portrait of a woman with red hair',
+    credit: 'Freddy Rezvanian', page: 'https://unsplash.com/photos/a-close-up-of-a-woman-with-red-hair-qtptQD9vaEQ' },
+  { cat: 'events', title: 'Lights Aloft', ratio: 1.33,
+    src: 'https://images.unsplash.com/photo-1768405031181-33bb016e2fbb',
+    alt: 'A crowd holding up lights at a concert',
+    credit: 'Rafael Garcin', page: 'https://unsplash.com/photos/crowd-holding-up-lights-at-a-concert-d8clU5pcFJQ' },
+  { cat: 'commercial', title: 'Black Cap', ratio: 0.8,
+    src: 'https://images.unsplash.com/photo-1760920250029-36af9369a0bb',
+    alt: 'Clear glass perfume bottle with a black cap',
+    credit: 'Kier in Sight Archives', page: 'https://unsplash.com/photos/a-clear-glass-perfume-bottle-with-black-cap-j1vg92xdoX4' },
+  { cat: 'pre-wedding', title: 'Curtain Light', ratio: 0.8,
+    src: 'https://images.unsplash.com/photo-1520342868574-5fa3804e551c',
+    alt: 'Black-and-white photograph of a couple facing each other in front of a curtain',
+    credit: 'Marius Muresan', page: 'https://unsplash.com/photos/grayscale-photography-of-couple-facing-in-front-curtain-pMxjIk_KhkY' },
+  { cat: 'maternity', title: 'In White', ratio: 0.75,
+    src: 'https://images.unsplash.com/photo-1752240879764-97bb683bf0d5',
+    alt: 'A pregnant woman smiling in a white dress',
+    credit: 'Arturo Añez', page: 'https://unsplash.com/photos/a-pregnant-woman-smiles-wearing-a-white-dress-gpitpw4EfOY' },
+  { cat: 'weddings', title: 'Lakeside Vow', ratio: 1.25,
+    src: 'https://images.unsplash.com/photo-1646325311277-0c35409fdd57',
+    alt: 'A bride and groom kissing in front of a lake',
+    credit: 'Anthony Tran', page: 'https://unsplash.com/photos/a-bride-and-groom-kissing-in-front-of-a-lake-fwFuglNcxNo' },
+  { cat: 'portraits', title: 'Grid Shadow', ratio: 0.75,
+    src: 'https://images.unsplash.com/photo-1759830849296-b4339df60c58',
+    alt: 'Portrait of a man with a grid-shaped shadow across his face',
+    credit: 'Marko Slavkovic', page: 'https://unsplash.com/photos/man-with-grid-shadow-on-face-UdpSX8yRuwc' },
+  { cat: 'events', title: 'Silhouettes', ratio: 1.25,
+    src: 'https://images.unsplash.com/photo-1768053921689-1bc09db904c9',
+    alt: 'Silhouetted crowd enjoying a concert beneath bright stage lights',
+    credit: 'Nicolás Flor', page: 'https://unsplash.com/photos/silhouetted-crowd-enjoys-a-concert-with-bright-stage-lights-gKgL1WlE5KM' },
+  { cat: 'commercial', title: 'Black & Gold', ratio: 1,
+    src: 'https://images.unsplash.com/photo-1584841247175-4d766cefa018',
+    alt: 'Black and gold perfume bottle',
+    credit: 'Mae Mu', page: 'https://unsplash.com/photos/black-and-gold-perfume-bottle-L5HKKFLw7j4' },
+  { cat: 'pre-wedding', title: 'Side by Side', ratio: 1,
+    src: 'https://images.unsplash.com/photo-1718183442384-921bf92d2edf',
+    alt: 'A man and a woman standing side by side',
+    credit: 'Hector Reyes', page: 'https://unsplash.com/photos/a-man-and-a-woman-standing-next-to-each-other-9rsU80c0xNQ' },
+  { cat: 'maternity', title: 'Monochrome Bloom', ratio: 0.8,
+    src: 'https://images.unsplash.com/photo-1579281791333-bd0cefa1bf30',
+    alt: 'Black-and-white photograph of a pregnant woman against a dark surface',
+    credit: 'João Paulo de Souza Oliveira', page: 'https://unsplash.com/photos/grayscale-photo-of-pregnant-woman-near-black-surface-RciB76mhWR4' },
+  { cat: 'weddings', title: 'The Long Aisle', ratio: 0.75,
+    src: 'https://images.unsplash.com/photo-1723373457096-54329042b2b5',
+    alt: 'A newly married couple walking down the aisle',
+    credit: 'Ben Atkins', page: 'https://unsplash.com/photos/a-newly-married-couple-walking-down-the-aisle-tHigXF-nPSY' },
+  { cat: 'portraits', title: 'Eyes Closed', ratio: 1,
+    src: 'https://images.unsplash.com/photo-1647269039117-fbff346dc1e5',
+    alt: 'Black-and-white portrait of a man with his eyes closed',
+    credit: 'Darius Bashar', page: 'https://unsplash.com/photos/a-black-and-white-photo-of-a-man-with-his-eyes-closed-sNk-nMNpSxg' },
+  { cat: 'events', title: 'Red Hour', ratio: 1.33,
+    src: 'https://images.unsplash.com/photo-1578946956849-3b335519f039',
+    alt: 'A crowd partying under red stage lights',
+    credit: 'Zachary Smith', page: 'https://unsplash.com/photos/crowd-partying-with-red-stage-lights-wahZ_EpEOmw' },
+  { cat: 'commercial', title: 'Botanical Still', ratio: 0.75,
+    src: 'https://images.unsplash.com/photo-1720967361123-9c17ec9025dc',
+    alt: 'A bottle of perfume beside a potted plant',
+    credit: 'Aman Chaturvedi', page: 'https://unsplash.com/photos/a-bottle-of-perfume-sitting-next-to-a-potted-plant-DoXaiQ__JEI' }
+];
+</script>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- helpers & capability flags ---------- */
+  const d = document.documentElement;
+  const qs = (s, c = document) => c.querySelector(s);
+  const qsa = (s, c = document) => [...c.querySelectorAll(s)];
+  const pad = n => String(n).padStart(2, '0');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const hasGsap = !!(window.gsap && window.ScrollTrigger);
+  const canAnimate = hasGsap && !reduce;
+
+  if (window.lucide) { try { lucide.createIcons(); } catch (e) {} }
+
+  /* ---------- lazy image loader (reusable for future sections) ---------- */
+  function loadImg(img) {
+    const src = img.dataset.src;
+    if (!src || img.getAttribute('src')) return;
+    const host = img.closest('[data-img]');
+    img.addEventListener('load', () => host && host.classList.add('has-image'), { once: true });
+    if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+    img.src = src;
+  }
+  const imgObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(entries => entries.forEach(e => {
+        if (e.isIntersecting) { loadImg(e.target); imgObserver.unobserve(e.target); }
+      }), { rootMargin: '300px' })
+    : null;
+  qsa('img[data-src]:not(.slide__img)').forEach(img => imgObserver ? imgObserver.observe(img) : loadImg(img));   // hero slides are loaded on demand by loadSlide()
+
+  /* ---------- smooth scrolling (Lenis) ---------- */
+  let lenis = null;
+  if (!reduce && window.Lenis) {
+    lenis = new Lenis({
+      duration: 1.15,
+      easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true            // touch devices keep native scrolling (best for Android)
+    });
+    if (hasGsap) {
+      gsap.registerPlugin(ScrollTrigger);
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(t => lenis.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+    } else {
+      const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+    }
+    if (d.classList.contains('is-intro')) lenis.stop();
+  } else if (hasGsap) {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
+  /* ---------- anchors ---------- */
+  function scrollToTarget(hash) {
+    const el = hash === '#top' ? document.body : qs(hash);
+    if (!el) return;
+    if (lenis) lenis.scrollTo(hash === '#top' ? 0 : el, { duration: 1.6, easing: t => 1 - Math.pow(1 - t, 4) });
+    else if (hash === '#top') window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const hash = a.getAttribute('href');
+    if (hash.length < 2) return;
+    e.preventDefault();
+    if (menuOpen) closeMenu(true);
+    scrollToTarget(hash);
+    history.replaceState(null, '', hash);
+  });
+
+  /* ---------- navigation behaviour ---------- */
+  const nav = qs('#nav');
+  let lastY = 0, ticking = false;
+  addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      nav.classList.toggle('is-solid', y > 40);
+      if (!menuOpen) {
+        if (y > lastY + 4 && y > 260) nav.classList.add('is-hidden');
+        else if (y < lastY - 4 || y < 120) nav.classList.remove('is-hidden');
+      }
+      lastY = y;
+      ticking = false;
+    });
+  }, { passive: true });
+
+  // active section indicator
+  const links = qsa('.nav__links a');
+  if ('IntersectionObserver' in window) {
+    const sio = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const id = e.target.id;
+      links.forEach(l => l.classList.toggle('is-current', l.dataset.link === id));
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    qsa('main section[id]').forEach(s => sio.observe(s));
+  }
+
+  /* ---------- mobile menu ---------- */
+  const burger = qs('#burger'), menu = qs('#menu');
+  let menuOpen = false;
+  function openMenu() {
+    menuOpen = true;
+    d.classList.add('menu-open');
+    burger.setAttribute('aria-expanded', 'true');
+    burger.setAttribute('aria-label', 'Close menu');
+    menu.removeAttribute('inert');
+    menu.setAttribute('aria-hidden', 'false');
+    if (lenis) lenis.stop();
+    setTimeout(() => { const a = qs('a', menu); a && a.focus({ preventScroll: true }); }, 450);
+  }
+  function closeMenu(skipFocus) {
+    menuOpen = false;
+    d.classList.remove('menu-open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Open menu');
+    menu.setAttribute('inert', '');
+    menu.setAttribute('aria-hidden', 'true');
+    if (lenis && !d.classList.contains('is-intro')) lenis.start();
+    if (!skipFocus) burger.focus({ preventScroll: true });
+  }
+  burger.addEventListener('click', () => menuOpen ? closeMenu() : openMenu());
+  document.addEventListener('keydown', e => {
+    if (!menuOpen) return;
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key === 'Tab') {                       // simple focus trap
+      const f = [burger, ...qsa('a', menu)];
+      const i = f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+    }
+  });
+  matchMedia('(min-width: 992px)').addEventListener('change', e => { if (e.matches && menuOpen) closeMenu(true); });
+
+  /* ---------- hero slideshow ---------- */
+  const slides = qsa('.slide');
+  const dotsN = slides.length;
+  const curEl = qs('#heroCur'), capEl = qs('#heroCap'), bar = qs('#heroBar');
+  const pauseBtn = qs('#heroPause');
+  const SLIDE_TIME = 7;
+  let cur = 0, prog = null, running = false, userPaused = false;
+
+  const loadSlide = s => { const im = qs('img[data-src]', s); if (im) loadImg(im); };
+  loadSlide(slides[0]);
+  if (slides[1]) loadSlide(slides[1]);
+
+  function setUI(n) {
+    curEl.textContent = pad(n + 1);
+    capEl.textContent = slides[n].dataset.caption;
+  }
+  function restartProgress() {
+    if (!canAnimate) return;
+    if (prog) prog.kill();
+    gsap.set(bar, { scaleX: 0 });
+    if (!running) return;
+    prog = gsap.to(bar, { scaleX: 1, duration: SLIDE_TIME, ease: 'none', onComplete: () => go(cur + 1) });
+  }
+  function go(n) {
+    n = (n + dotsN) % dotsN;
+    if (n === cur) return;
+    const prev = slides[cur], next = slides[n];
+    cur = n; setUI(n); loadSlide(next);
+    if (slides[(n + 1) % dotsN]) loadSlide(slides[(n + 1) % dotsN]);
+    if (canAnimate) {
+      gsap.killTweensOf([prev, next]);
+      gsap.set(next, { zIndex: 2, opacity: 0, scale: 1.1 });
+      gsap.set(prev, { zIndex: 1 });
+      gsap.to(next, { opacity: 1, scale: 1, duration: 2.2, ease: 'power2.out' });
+      gsap.to(prev, { opacity: 0, duration: 2.2, delay: .25, ease: 'power2.inOut' });
+    } else {
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === n));
+    }
+    restartProgress();
+  }
+  function startSlideshow() {
+    if (!canAnimate || userPaused) return;
+    running = true; restartProgress();
+  }
+  qs('#heroNext').addEventListener('click', () => go(cur + 1));
+  qs('#heroPrev').addEventListener('click', () => go(cur - 1));
+  pauseBtn.addEventListener('click', () => {
+    userPaused = !userPaused;
+    pauseBtn.setAttribute('aria-pressed', String(userPaused));
+    pauseBtn.setAttribute('aria-label', userPaused ? 'Play slideshow' : 'Pause slideshow');
+    if (userPaused) { running = false; if (prog) prog.pause(); }
+    else if (canAnimate) { running = true; prog ? prog.resume() : restartProgress(); }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (!prog || userPaused) return;
+    document.hidden ? prog.pause() : prog.resume();
+  });
+  setUI(0);
+  // With reduced motion the slideshow stays static; arrows/dots remain available.
+  if (reduce) { qsa('.ctrl-btn--arrow').forEach(b => (b.style.display = 'inline-grid')); pauseBtn.style.display = 'none'; }
+
+  /* ---------- hero entrance + scroll effects ---------- */
+  let heroPlayed = false;
+  function playHero() {
+    if (heroPlayed) return; heroPlayed = true;
+    const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    tl.fromTo('.hero__media', { scale: 1.2, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.6 }, 0)
+      .to('.hero__frame', { opacity: 1, duration: 1.8, ease: 'power2.out' }, .2)
+      .to('.hero__line > span', { yPercent: 0, opacity: 1, duration: 1.5, stagger: .14 }, .3)
+      .to('.hero [data-hero]', { opacity: 1, y: 0, duration: 1.1, stagger: .1, ease: 'power3.out' }, .75)
+      .to('.nav__inner', { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out' }, .5)
+      .add(startSlideshow, 2.2);
+  }
+  function scrollFx() {
+    gsap.to('.hero__media', { yPercent: 8, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    gsap.to('.hero__content', { yPercent: -10, opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: '70% top', scrub: true } });
+    qsa('.stub__inner').forEach(el => gsap.from(el, { opacity: 0, y: 40, duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true } }));
+  }
+
+  /* ---------- cinematic intro ---------- */
+  const intro = qs('#intro');
+  let exiting = false, introTl = null;
+
+  function cleanupIntro() {
+    d.classList.remove('is-intro');
+    try { sessionStorage.setItem('lumora-intro', '1'); } catch (e) {}
+    if (lenis && !menuOpen) lenis.start();
+    if (intro) intro.remove();
+    ScrollTrigger.refresh();
+  }
+  function runExit(k = 1) {
+    if (exiting) return; exiting = true;
+    gsap.timeline({ onComplete: cleanupIntro })
+      .to('.intro__center, .intro__foot, .intro__line', { opacity: 0, y: -12, duration: .5 * k, ease: 'power2.in' })
+      .to('.intro__bar--top', { yPercent: -100, duration: 1.25 * k, ease: 'expo.inOut' }, '>-0.05')
+      .to('.intro__bar--bottom', { yPercent: 100, duration: 1.25 * k, ease: 'expo.inOut' }, '<')
+      .add(playHero, '<+0.4');
+  }
+  function skipIntro() {
+    if (exiting) return;
+    if (introTl) introTl.kill();
+    runExit(.6);
+  }
+  function startIntro() {
+    // split brand into letters
+    const brand = qs('#introBrand');
+    const word = brand.textContent.trim();
+    brand.textContent = '';
+    [...word].forEach(c => { const s = document.createElement('span'); s.className = 'ch'; s.setAttribute('aria-hidden', 'true'); s.textContent = c; brand.appendChild(s); });
+
+    const count = qs('#introCount'), counter = { v: 0 };
+    introTl = gsap.timeline({ onComplete: () => runExit(1) });
+    introTl
+      .set(['.intro__center', '.intro__foot'], { opacity: 1 }, 0)
+      .to('.intro__mark .draw', { strokeDashoffset: 0, duration: 1.7, ease: 'power2.inOut', stagger: .16 }, .2)
+      .from('.intro__brand .ch', { yPercent: 120, opacity: 0, duration: 1.1, ease: 'expo.out', stagger: .07 }, .9)
+      .from('.intro__sub', { opacity: 0, y: 10, duration: 1, ease: 'power3.out' }, 1.7)
+      .from('.intro__tag', { opacity: 0, y: 12, duration: 1.1, ease: 'power3.out' }, 2.1)
+      .from('.intro__foot', { opacity: 0, duration: .8 }, .3)
+      .to(counter, { v: 100, duration: 3.5, ease: 'power1.inOut', onUpdate: () => { count.textContent = String(Math.round(counter.v)).padStart(3, '0'); } }, 0)
+      .to('#introLine', { scaleX: 1, duration: 3.5, ease: 'power1.inOut' }, 0)
+      .to({}, { duration: .45 });
+
+    qs('#introSkip').addEventListener('click', skipIntro);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && !exiting && d.classList.contains('is-intro')) skipIntro(); });
+    qs('#introSkip').focus({ preventScroll: true });
+  }
+
+  /* ---------- portfolio: masonry gallery, filters, lightbox ---------- */
+  const PF = Array.isArray(window.LUMORA_PORTFOLIO) ? window.LUMORA_PORTFOLIO : [];
+  const PF_CATS = { weddings: 'Weddings', 'pre-wedding': 'Pre-Wedding', portraits: 'Portraits', maternity: 'Maternity', events: 'Events', commercial: 'Commercial' };
+  const PF_WIDTHS = [400, 640, 880, 1200];
+  const PF_ICON = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
+  const pfEsc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const pfIsCdn = u => /^https:\/\/(images|plus)\.unsplash\.com\//.test(u);
+  const pfBase = u => u.split('?')[0];
+  const pfThumb = (it, w) => pfIsCdn(it.src)
+    ? `${pfBase(it.src)}?auto=format&fit=crop&crop=faces,entropy&w=${w}&h=${Math.round(w / it.ratio)}&q=70`
+    : it.src;
+  const pfFull = it => it.full || (pfIsCdn(it.src) ? `${pfBase(it.src)}?auto=format&fit=max&w=2000&q=80` : it.src);
+
+  let pfGrid = null, pfStatusEl = null;
+  let pfItems = [], pfVisible = [], pfFilter = 'all', pfColsN = 0, pfTriggers = [], pfResizeT = 0;
+
+  const lbEl = qs('#lightbox'), lbStage = qs('#lbStage'), lbFig = qs('#lbFig'), lbImg = qs('#lbImg');
+  const lbCloseBtn = qs('#lbClose'), lbPrevBtn = qs('#lbPrev'), lbNextBtn = qs('#lbNext');
+  let lbIdx = 0, lbIsOpen = false, lbLast = null, lbToken = 0;
+
+  function pfBuild(it, i) {
+    it.ratio = it.ratio > 0 ? it.ratio : 1;
+    const catLabel = PF_CATS[it.cat] || it.cat;
+    const el = document.createElement('figure');
+    el.className = 'pf-item';
+    el.dataset.cat = it.cat;
+    el._it = it; el._cat = it.cat; el._ratio = it.ratio;
+    const srcset = pfIsCdn(it.src) ? PF_WIDTHS.map(w => `${pfThumb(it, w)} ${w}w`).join(', ') : '';
+    el.innerHTML =
+      `<button class="pf-tile" type="button" style="aspect-ratio:${it.ratio}" aria-label="View larger: ${pfEsc(it.title)}, ${pfEsc(catLabel)}">` +
+        `<img class="pf-img" src="${pfEsc(pfThumb(it, 640))}"${srcset ? ` srcset="${pfEsc(srcset)}" sizes="(min-width: 880px) 31vw, 48vw"` : ''} alt="${pfEsc(it.alt)}" width="640" height="${Math.round(640 / it.ratio)}" loading="lazy" decoding="async">` +
+        `<span class="pf-fail" aria-hidden="true">Image unavailable<br>Replace this URL</span>` +
+        `<span class="pf-shade"></span>` +
+        `<span class="pf-num" aria-hidden="true"></span>` +
+        `<span class="pf-open" aria-hidden="true">${PF_ICON}</span>` +
+        `<span class="pf-cap"><span class="pf-cat">${pfEsc(catLabel)}</span><span class="pf-name">${pfEsc(it.title)}</span></span>` +
+      `</button>`;
+    const tile = el.firstElementChild, img = qs('img', el);
+    img.addEventListener('load', () => tile.classList.add('is-loaded'));
+    img.addEventListener('error', () => tile.classList.add('is-error'));
+    tile.addEventListener('click', () => lbOpen(el));
+    return el;
+  }
+
+  function pfColCount() {
+    const w = pfGrid.clientWidth;
+    return w >= 880 ? 3 : (w >= 300 ? 2 : 1);
+  }
+  function pfOffsets(n) { return n === 3 ? [0, .2, .07] : n === 2 ? [0, .14] : [0]; }   // editorial stagger, in column-widths
+  function pfSetOffsets() {
+    const cols = qsa('.pf-col', pfGrid);
+    const w = cols[0] ? cols[0].clientWidth : 0;
+    const offs = pfOffsets(cols.length);
+    cols.forEach((c, i) => { c.style.marginTop = Math.round(offs[i] * w) + 'px'; });
+  }
+  function pfLayout(list) {
+    const n = pfColCount();
+    pfGrid.textContent = '';
+    const cols = Array.from({ length: n }, () => {
+      const c = document.createElement('div'); c.className = 'pf-col'; pfGrid.appendChild(c); return c;
+    });
+    const heights = pfOffsets(n).slice();
+    list.forEach(el => {
+      let k = 0;
+      for (let i = 1; i < n; i++) if (heights[i] < heights[k] - 1e-6) k = i;
+      cols[k].appendChild(el);
+      heights[k] += 1 / el._ratio + .07;
+    });
+    pfColsN = n;
+    pfSetOffsets();
+  }
+  function pfNumber(list) {
+    list.forEach((el, i) => { const n = qs('.pf-num', el); if (n) n.textContent = pad(i + 1); });
+  }
+  function pfCheckLoaded() {
+    pfVisible.forEach(el => {
+      const img = qs('img', el);
+      if (img.complete && img.naturalWidth > 0) img.parentElement.classList.add('is-loaded');
+    });
+  }
+  function pfReveal() {
+    pfTriggers.forEach(t => t.kill());
+    pfTriggers = [];
+    if (!canAnimate) return;
+    gsap.set(pfVisible, { opacity: 0, y: 48 });
+    pfTriggers = ScrollTrigger.batch(pfVisible, {
+      start: 'top 93%', once: true, interval: .1, batchMax: 4,
+      onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 1.1, stagger: .12, ease: 'power3.out', overwrite: true })
+    });
+  }
+  function pfApply(f, animate) {
+    pfFilter = f;
+    qsa('.pf-filter').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === f)));
+    const list = f === 'all' ? pfItems : pfItems.filter(el => el._cat === f);
+    const label = f === 'all' ? 'all categories' : PF_CATS[f];
+    pfStatusEl.textContent = `Showing ${list.length} photograph${list.length === 1 ? '' : 's'} — ${label}`;
+    const run = () => {
+      pfVisible = list;
+      pfLayout(list);
+      pfNumber(list);
+      pfReveal();
+      pfCheckLoaded();
+      if (hasGsap) requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
+    const shown = qsa('.pf-item', pfGrid);
+    if (animate && canAnimate && shown.length) {
+      gsap.to(shown, { opacity: 0, y: -16, duration: .35, stagger: { each: .015 }, ease: 'power2.in', overwrite: true, onComplete: run });
+    } else run();
+  }
+
+  /* lightbox */
+  function lbRender() {
+    const el = pfVisible[lbIdx];
+    if (!el) return;
+    const it = el._it, n = pfVisible.length, url = pfFull(it), token = ++lbToken;
+    lbFig.classList.add('is-loading');
+    lbImg.onload = () => { if (token === lbToken) lbFig.classList.remove('is-loading'); };
+    lbImg.onerror = () => { if (token === lbToken) { lbFig.classList.remove('is-loading'); qs('#lbCredit').textContent = 'This image could not be loaded — replace its URL in the portfolio data.'; } };
+    lbImg.alt = it.alt || '';
+    if (lbImg.getAttribute('src') === url && lbImg.complete && lbImg.naturalWidth > 0) lbFig.classList.remove('is-loading');
+    else lbImg.src = url;
+    qs('#lbCur').textContent = pad(lbIdx + 1);
+    qs('#lbTot').textContent = pad(n);
+    qs('#lbCat').textContent = PF_CATS[it.cat] || it.cat;
+    qs('#lbTitle').textContent = it.title;
+    const who = it.credit
+      ? `Photograph by ${it.page ? `<a href="${pfEsc(it.page)}" target="_blank" rel="noopener noreferrer">${pfEsc(it.credit)}</a>` : pfEsc(it.credit)} on Unsplash`
+      : 'Placeholder image';
+    qs('#lbCredit').innerHTML = `${who} &middot; stock image used as fictional demo content`;
+    lbPrevBtn.hidden = lbNextBtn.hidden = n < 2;
+    if (n > 1) [lbIdx + 1, lbIdx - 1].forEach(j => { const nb = pfVisible[(j + n) % n]; if (nb) new Image().src = pfFull(nb._it); });
+  }
+  function lbOpen(el) {
+    lbIdx = Math.max(0, pfVisible.indexOf(el));
+    lbLast = document.activeElement;
+    lbIsOpen = true;
+    lbEl.classList.add('is-open');
+    d.classList.add('lb-open');
+    lbEl.removeAttribute('inert');
+    lbEl.setAttribute('aria-hidden', 'false');
+    if (lenis) lenis.stop();
+    lbRender();
+    lbCloseBtn.focus({ preventScroll: true });
+  }
+  function lbClose() {
+    if (!lbIsOpen) return;
+    lbIsOpen = false;
+    lbEl.classList.remove('is-open');
+    d.classList.remove('lb-open');
+    lbEl.setAttribute('inert', '');
+    lbEl.setAttribute('aria-hidden', 'true');
+    if (lenis && !d.classList.contains('is-intro') && !menuOpen) lenis.start();
+    if (lbLast && document.contains(lbLast)) lbLast.focus({ preventScroll: true });
+  }
+  function lbGo(dir) {
+    const n = pfVisible.length;
+    if (n < 2) return;
+    lbIdx = (lbIdx + dir + n) % n;
+    lbRender();
+  }
+  lbCloseBtn.addEventListener('click', lbClose);
+  lbPrevBtn.addEventListener('click', () => lbGo(-1));
+  lbNextBtn.addEventListener('click', () => lbGo(1));
+  lbStage.addEventListener('click', e => { if (e.target === lbStage || e.target === lbFig) lbClose(); });
+  document.addEventListener('keydown', e => {
+    if (!lbIsOpen) return;
+    if (e.key === 'Escape') { e.preventDefault(); lbClose(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); lbGo(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); lbGo(-1); }
+    else if (e.key === 'Tab') {
+      const f = [lbCloseBtn, lbPrevBtn, lbNextBtn].filter(b => !b.hidden);
+      const i = f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+    }
+  });
+  let lbSX = null, lbSY = 0;   // swipe
+  lbStage.addEventListener('pointerdown', e => { if (e.target.closest('button, a')) return; lbSX = e.clientX; lbSY = e.clientY; });
+  lbStage.addEventListener('pointerup', e => {
+    if (lbSX === null) return;
+    const dx = e.clientX - lbSX, dy = e.clientY - lbSY;
+    lbSX = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) lbGo(dx < 0 ? 1 : -1);
+  });
+  lbStage.addEventListener('pointercancel', () => { lbSX = null; });
+
+  function pfInit() {
+    pfGrid = qs('#pfGrid'); pfStatusEl = qs('#pfStatus');
+    if (!pfGrid || !PF.length) return;
+    pfItems = PF.map(pfBuild);
+
+    // category counts
+    qsa('[data-pf-count]').forEach(s => {
+      const k = s.dataset.pfCount;
+      s.textContent = pad(k === 'all' ? PF.length : PF.filter(p => p.cat === k).length);
+    });
+
+    // filters
+    qsa('.pf-filter').forEach(b => b.addEventListener('click', () => {
+      if (b.dataset.filter === pfFilter) return;
+      pfApply(b.dataset.filter, true);
+      b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    }));
+
+    // responsive re-flow (column count changes with the container width)
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(() => {
+        clearTimeout(pfResizeT);
+        pfResizeT = setTimeout(() => {
+          if (!pfVisible.length) return;
+          if (pfColCount() !== pfColsN) { pfLayout(pfVisible); if (hasGsap) ScrollTrigger.refresh(); }
+          else pfSetOffsets();
+        }, 140);
+      }).observe(pfGrid);
+    }
+
+    pfApply('all', false);
+
+    // section header, filters and footer reveal
+    if (canAnimate) {
+      [['.pf-head > *', '.pf-head'], ['.pf-filters', '.pf-filters'], ['.pf-foot', '.pf-foot']].forEach(([targets, trig]) => {
+        gsap.from(targets, { opacity: 0, y: 36, duration: 1.1, stagger: .15, ease: 'power3.out',
+          scrollTrigger: { trigger: trig, start: 'top 88%', once: true } });
+      });
+    }
+  }
+
+  /* ---------- services & pricing: scroll reveals ---------- */
+  function svcInit() {
+    const cards = qsa('.svc-card');
+    if (!cards.length || !canAnimate) return;          // reduced motion / no GSAP: static, fully visible
+    try {
+      gsap.from('.svc-head > *', { opacity: 0, y: 36, duration: 1.1, stagger: .15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.svc-head', start: 'top 88%', once: true } });
+      gsap.from('.svc-bottom > *', { opacity: 0, y: 30, duration: 1, stagger: .15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.svc-bottom', start: 'top 94%', once: true } });
+      gsap.set(cards, { opacity: 0, y: 56 });
+      ScrollTrigger.batch(cards, {
+        start: 'top 90%', once: true, interval: .12, batchMax: 3,
+        onEnter: batch => {
+          gsap.to(batch, { opacity: 1, y: 0, duration: 1.2, stagger: .14, ease: 'power3.out', overwrite: true });
+          gsap.fromTo(batch.map(c => qs('.svc-zoom', c)), { scale: 1.18 }, { scale: 1, duration: 2, stagger: .14, ease: 'expo.out' });
+          gsap.from(batch.flatMap(c => qsa('.svc-list li', c)), { opacity: 0, x: -10, duration: .8, stagger: .05, delay: .55, ease: 'power2.out' });
+        }
+      });
+    } catch (err) {
+      cards.forEach(c => { c.style.opacity = 1; });    // never leave cards hidden if an animation fails
+    }
+  }
+
+  /* ---------- about / studio: scroll animations ---------- */
+  function aboutInit() {
+    if (!qs('.about') || !canAnimate) return;          // reduced motion / no GSAP: static, fully visible
+    try {
+      const sTrig = (el, start, fn) => ScrollTrigger.create({ trigger: el, start, once: true, onEnter: fn });
+
+      // headline mask + copy
+      gsap.set('.about-h .ln > span', { yPercent: 110 });
+      gsap.set('.about-copy [data-ab]', { opacity: 0, y: 28 });
+      sTrig('.about-copy', 'top 82%', () => {
+        gsap.to('.about-h .ln > span', { yPercent: 0, duration: 1.4, stagger: .14, ease: 'expo.out' });
+        gsap.to('.about-copy [data-ab]', { opacity: 1, y: 0, duration: 1.1, stagger: .12, delay: .25, ease: 'power3.out' });
+      });
+
+      // image collage: clip reveal, settle, gentle parallax
+      gsap.set('.about-clip', { clipPath: 'inset(100% 0% 0% 0%)' });
+      gsap.set('.about-zoom', { scale: 1.3 });
+      gsap.set('.about-cap', { opacity: 0, y: 10 });
+      sTrig('.about-visual', 'top 82%', () => {
+        gsap.to('.about-clip', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.7, stagger: .3, ease: 'expo.inOut' });
+        gsap.to('.about-zoom', { scale: 1, duration: 2.4, stagger: .3, ease: 'expo.out' });
+        gsap.to('.about-cap', { opacity: 1, y: 0, duration: 1, delay: 1.2, ease: 'power3.out' });
+      });
+      const para = { trigger: '.about-visual', start: 'top bottom', end: 'bottom top', scrub: true };
+      gsap.fromTo('.about-fig--a', { yPercent: 4 }, { yPercent: -4, ease: 'none', scrollTrigger: para });
+      gsap.fromTo('.about-fig--b', { yPercent: 12 }, { yPercent: -12, ease: 'none', scrollTrigger: para });
+
+      // tagline band: words light up with scroll, outline wordmark drifts
+      gsap.fromTo('.about-statement .w', { opacity: .14 }, { opacity: 1, ease: 'none', stagger: .25,
+        scrollTrigger: { trigger: '.about-band', start: 'top 72%', end: 'bottom 55%', scrub: true } });
+      gsap.fromTo('.about-mark', { xPercent: 14 }, { xPercent: -14, ease: 'none',
+        scrollTrigger: { trigger: '.about-band', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+      // philosophy pillars + approach steps: staggered rise, gold rule draws across the top
+      const rise = sel => {
+        const els = qsa(sel), rules = els.map(e => qs('.about-rule', e)).filter(Boolean);
+        gsap.set(els, { opacity: 0, y: 40 });
+        gsap.set(rules, { scaleX: 0, transformOrigin: 'left center' });
+        ScrollTrigger.batch(els, { start: 'top 90%', once: true, interval: .12, batchMax: 4,
+          onEnter: b => {
+            gsap.to(b, { opacity: 1, y: 0, duration: 1.1, stagger: .14, ease: 'power3.out', overwrite: true });
+            gsap.to(b.map(e => qs('.about-rule', e)).filter(Boolean), { scaleX: 1, duration: 1.6, stagger: .14, delay: .15, ease: 'expo.out' });
+          } });
+      };
+      rise('.about-pillar');
+      rise('.about-step');
+
+      // sub-block headings and closing note
+      const fades = qsa('.about-sub > *, .about-foot');
+      gsap.set(fades, { opacity: 0, y: 28 });
+      ScrollTrigger.batch(fades, { start: 'top 92%', once: true, interval: .1, batchMax: 4,
+        onEnter: b => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, stagger: .12, ease: 'power3.out', overwrite: true }) });
+    } catch (err) {
+      gsap.set(qsa('.about, .about *'), { clearProps: 'opacity,transform,clipPath' });   // never leave content hidden
+    }
+  }
+
+  /* ---------- contact: demo enquiry form (validates in the browser; never sends or stores anything) ---------- */
+  function ctInit() {
+    const form = qs('.ct-form');
+    if (!form) return;
+    const succ = qs('.ct-success'), dateEl = qs('#cf-date'), story = qs('#cf-story'), count = qs('.field__count', form);
+    const MAX = story.maxLength > 0 ? story.maxLength : 1200;
+    const now = new Date();
+    dateEl.min = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;   // no past dates
+
+    const rules = {
+      'cf-name': v => v.trim().length >= 2 ? '' : 'Please enter your full name.',
+      'cf-email': v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Please enter a valid email address.',
+      'cf-phone': v => {
+        const digits = v.replace(/\D/g, '').length;
+        return /^[+()\d][\d\s().\-+]*$/.test(v.trim()) && digits >= 7 && digits <= 15 ? '' : 'Please enter a valid phone number.';
+      },
+      'cf-service': v => v ? '' : 'Please choose a service.',
+      'cf-date': v => !v || v >= dateEl.min ? '' : 'Please choose today or a future date.',
+      'cf-story': v => v.trim().length >= 10 ? '' : 'Please tell us a little about your story (at least 10 characters).'
+    };
+    const ctls = qsa('.field__ctl', form);
+
+    function check(el, show = true) {
+      const rule = rules[el.id], msg = rule ? rule(el.value) : '';
+      if (show) {
+        const f = el.closest('.field'), err = qs('.field__err', f);
+        f.classList.toggle('is-invalid', !!msg);
+        el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+        if (err) err.textContent = msg;
+      }
+      return !msg;
+    }
+    function clearState() {
+      ctls.forEach(el => {
+        delete el.dataset.touched;
+        el.removeAttribute('aria-invalid');
+        el.closest('.field').classList.remove('is-invalid');
+        const err = qs('.field__err', el.closest('.field'));
+        if (err) err.textContent = '';
+      });
+      count.textContent = `0 / ${MAX}`;
+    }
+    function toView(el) {
+      const r = el.getBoundingClientRect();
+      if (r.top < 80 || r.bottom > innerHeight) {
+        if (lenis) lenis.scrollTo(el, { offset: -120, duration: 1.2 });
+        else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      }
+    }
+
+    ctls.forEach(el => {
+      el.addEventListener('blur', () => { el.dataset.touched = '1'; check(el); });
+      el.addEventListener(el.tagName === 'SELECT' || el.type === 'date' ? 'change' : 'input', () => {
+        if (el.dataset.touched || el.closest('.field').classList.contains('is-invalid')) check(el);
+      });
+    });
+    story.addEventListener('input', () => { count.textContent = `${story.value.length} / ${MAX}`; });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();                                   // nothing is ever sent
+      let first = null;
+      ctls.forEach(el => { el.dataset.touched = '1'; if (!check(el) && !first) first = el; });
+      if (first) { first.focus(); return; }
+      const first_name = qs('#cf-name').value.trim().split(/\s+/)[0] || '';
+      qs('.ct-name', succ).textContent = first_name ? ', ' + first_name : '';
+      succ.style.minHeight = form.offsetHeight + 'px';
+      form.reset();
+      clearState();
+      form.hidden = true;
+      succ.hidden = false;
+      succ.focus({ preventScroll: true });
+      toView(succ);
+    });
+    qs('[data-ct-reset]', succ).addEventListener('click', () => {
+      succ.hidden = true;
+      succ.style.minHeight = '';
+      form.hidden = false;
+      qs('#cf-name').focus({ preventScroll: true });
+      toView(form);
+    });
+  }
+
+  /* ---------- contact: scroll animations ---------- */
+  function contactInit() {
+    if (!qs('.contact') || !canAnimate) return;            // reduced motion / no GSAP: static, fully visible
+    try {
+      // headline mask + intro copy
+      gsap.set('.ct-h .ln > span', { yPercent: 110 });
+      gsap.set('.ct-intro > [data-ct]', { opacity: 0, y: 28 });
+      ScrollTrigger.create({ trigger: '.ct-intro', start: 'top 82%', once: true, onEnter: () => {
+        gsap.to('.ct-h .ln > span', { yPercent: 0, duration: 1.4, stagger: .14, ease: 'expo.out' });
+        gsap.to('.ct-intro > [data-ct]', { opacity: 1, y: 0, duration: 1.1, stagger: .12, delay: .25, ease: 'power3.out' });
+      } });
+
+      // letterbox still: horizontal wipe + settle
+      gsap.set('.ct-film__frame', { clipPath: 'inset(0% 100% 0% 0%)' });
+      gsap.set('.ct-film__zoom', { scale: 1.3 });
+      ScrollTrigger.create({ trigger: '.ct-film', start: 'top 88%', once: true, onEnter: () => {
+        gsap.to('.ct-film__frame', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.8, ease: 'expo.inOut' });
+        gsap.to('.ct-film__zoom', { scale: 1, duration: 2.4, ease: 'expo.out' });
+      } });
+
+      // info rows
+      const rows = qsa('.ct-item');
+      gsap.set(rows, { opacity: 0, y: 30 });
+      ScrollTrigger.batch(rows, { start: 'top 92%', once: true, interval: .1, batchMax: 4,
+        onEnter: b => gsap.to(b, { opacity: 1, y: 0, duration: 1, stagger: .12, ease: 'power3.out', overwrite: true }) });
+
+      // form card, then its fields
+      const fx = qsa('.ct-form__head, .ct-form .field, .ct-actions');
+      gsap.set('.ct-formwrap', { opacity: 0, y: 60 });
+      gsap.set(fx, { opacity: 0, y: 24 });
+      ScrollTrigger.create({ trigger: '.ct-formwrap', start: 'top 85%', once: true, onEnter: () => {
+        gsap.to('.ct-formwrap', { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out' });
+        gsap.to(fx, { opacity: 1, y: 0, duration: .9, stagger: .07, delay: .3, ease: 'power3.out' });
+      } });
+    } catch (err) {
+      gsap.set(qsa('.contact, .contact *'), { clearProps: 'opacity,transform,clipPath' });   // never leave content hidden
+    }
+  }
+
+  /* ---------- init ---------- */
+  pfInit();
+  svcInit();
+  aboutInit();
+  ctInit();
+  contactInit();
+  if (canAnimate) {
+    // initial transform states (opacity handled in CSS via .anim)
+    gsap.set('.hero__line > span', { yPercent: 110 });
+    gsap.set('.hero [data-hero]', { y: 24 });
+    gsap.set('.nav__inner', { y: -20 });
+    scrollFx();
+
+    const fontsReady = Promise.race([
+      document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve(),
+      new Promise(r => setTimeout(r, 1800))
+    ]);
+    fontsReady.then(() => {
+      try { d.classList.contains('is-intro') ? startIntro() : playHero(); }
+      catch (err) { d.classList.remove('is-intro', 'anim'); if (lenis) lenis.start(); }
+    });
+  } else {
+    // Reduced motion, or the animation libraries failed to load: show everything, no intro.
+    d.classList.remove('is-intro', 'anim');
+    if (lenis) lenis.start();
+    if (intro) intro.remove();
+  }
+})();
+</script>
+</body>
+</html>
